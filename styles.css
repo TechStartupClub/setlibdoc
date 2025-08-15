@@ -1,233 +1,232 @@
 :root {
-    --primary-color: #764ba2;
-    --background-color: rgb(21, 23, 28);
-    --text: rgb(202, 206, 215);
-    --font-size-base: 16px;
+	--primary-color: #764ba2;
+	--background-color: rgb(21, 23, 28);
+	--text: rgb(202, 206, 215);
+	--font-size-base: 16px;
 }
 
 body {
-    font-family: Arial, sans-serif;
-    background-color: var(--background-color);
-    margin: 40px;
-    color: var(--text);
-    line-height: 1.6;
+	font-family: Arial, sans-serif;
+	background-color: var(--background-color);
+	margin: 40px;
+	color: var(--text);
+	line-height: 1.6;
 }
 
-
 header {
-    /* background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); */
-    color: white;
-    padding: 2rem 0;
-    margin-bottom: 2rem;
-    border-radius: 10px;
-    text-align: center;
+	/* background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); */
+	color: white;
+	padding: 2rem 0;
+	margin-bottom: 2rem;
+	border-radius: 10px;
+	text-align: center;
 }
 
 h1 {
-    font-size: 2.5rem;
-    margin-bottom: 0.5rem;
+	font-size: 2.5rem;
+	margin-bottom: 0.5rem;
 }
 
 .subtitle {
-    font-size: 1.2rem;
-    opacity: 0.9;
+	font-size: 1.2rem;
+	opacity: 0.9;
 }
 
 .nav {
-    padding: 1rem;
-    border-radius: 8px;
-    margin-bottom: 2rem;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    position: sticky;
-    top: 20px;
-    z-index: 100;
+	padding: 1rem;
+	border-radius: 8px;
+	margin-bottom: 2rem;
+	box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+	position: sticky;
+	top: 20px;
+	z-index: 100;
 }
 
 .nav ul {
-    list-style: none;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
+	list-style: none;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 1rem;
 }
 
 .nav a {
-    color: #667eea;
-    text-decoration: none;
-    padding: 0.5rem 1rem;
-    border-radius: 5px;
-    transition: background 0.3s;
+	color: #667eea;
+	text-decoration: none;
+	padding: 0.5rem 1rem;
+	border-radius: 5px;
+	transition: background 0.3s;
 }
 
 .nav a:hover {
-    color: #667eea;
-    font-size: initial + 5%;
+	color: #667eea;
+	font-size: initial + 5%;
 }
 
 .section {
-    margin-bottom: 2rem;
-    border-radius: 5px;
-    overflow: hidden;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+	margin-bottom: 2rem;
+	border-radius: 5px;
+	overflow: hidden;
+	box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
 .section-header {
-    background: var(--primary-color);
-    color: white;
-    padding: .5rem;
-    font-size: 1.5rem;
-    font-weight: bolder;
+	background: var(--primary-color);
+	color: white;
+	padding: 0.5rem;
+	font-size: 1.5rem;
+	font-weight: bolder;
 }
 
 .section-content {
-    padding: 2rem;
+	padding: 2rem;
 }
 
 .endpoint {
-    margin-bottom: 2rem;
-    border-radius: 8px;
-    overflow: hidden;
+	margin-bottom: 2rem;
+	border-radius: 8px;
+	overflow: hidden;
 }
 
 .endpoint-header {
-    padding: 1rem;
-    background-color: #3A3A3A;
+	padding: 1rem;
+	background-color: #3a3a3a;
 }
 
 .method {
-    display: inline-block;
-    padding: 0.25rem 0.75rem;
-    border-radius: 4px;
-    color: white;
-    font-weight: bold;
-    font-size: 0.85rem;
-    margin-right: 1rem;
+	display: inline-block;
+	padding: 0.25rem 0.75rem;
+	border-radius: 4px;
+	color: white;
+	font-weight: bold;
+	font-size: 0.85rem;
+	margin-right: 1rem;
 }
 
 .method.get {
-    background: #28a745;
+	background: #28a745;
 }
 
 .method.post {
-    background: #007bff;
+	background: #007bff;
 }
 
 .method.patch {
-    background: #764ba2;
+	background: #764ba2;
 }
 
 .method.delete {
-    background: #dc3545;
+	background: #dc3545;
 }
 
 .endpoint-url {
-    font-family: 'Arial', monospace;
-    padding: 0.25rem 0.5rem;
-    border-radius: 4px;
+	font-family: 'Arial', monospace;
+	padding: 0.25rem 0.5rem;
+	border-radius: 4px;
 }
 
 .endpoint-body {
-    padding: 1.5rem;
+	padding: 1.5rem;
 }
 
 .description {
-    margin-bottom: 1rem;
-    color: #665;
+	margin-bottom: 1rem;
+	color: #665;
 }
 
 .params-section,
 .response-section {
-    margin-bottom: 1.5rem;
+	margin-bottom: 1.5rem;
 }
 
 .params-section h4,
 .response-section h4 {
-    color: #667eea;
-    margin-bottom: 0.5rem;
-    font-size: 1.1rem;
+	color: #667eea;
+	margin-bottom: 0.5rem;
+	font-size: 1.1rem;
 }
 
 .param {
-    padding: 0.75rem;
-    margin-bottom: 0.5rem;
-    border-radius: 5px;
-    border-left: 4px solid #667eea;
+	padding: 0.75rem;
+	margin-bottom: 0.5rem;
+	border-radius: 5px;
+	border-left: 4px solid #667eea;
 }
 
 .param-name {
-    font-weight: bold;
-    color: #333;
+	font-weight: bold;
+	color: #333;
 }
 
 .param-type {
-    color: #665;
-    font-style: italic;
-    margin-left: 0.5rem;
+	color: #665;
+	font-style: italic;
+	margin-left: 0.5rem;
 }
 
 .param-required {
-    color: #dc3545;
-    font-size: 0.8rem;
-    margin-left: 0.5rem;
+	color: #dc3545;
+	font-size: 0.8rem;
+	margin-left: 0.5rem;
 }
 
 .code-block {
-    border: 1px solid #e9ecef;
-    border-radius: 5px;
-    padding: 1rem;
-    margin: 1rem 0;
-    overflow-x: auto;
+	border: 1px solid #e9ecef;
+	border-radius: 5px;
+	padding: 1rem;
+	margin: 1rem 0;
+	overflow-x: auto;
 }
 
 .code-block pre {
-    margin: 0;
-    font-family: 'Courier New', monospace;
-    font-size: 0.9rem;
+	margin: 0;
+	font-family: 'Courier New', monospace;
+	font-size: 0.9rem;
 }
 
 .response-example {
-    border-left: 4px solid #28a745;
-    padding: 1rem;
-    margin: 0.5rem 0;
-    border-radius: 0 5px 5px 0;
+	border-left: 4px solid #28a745;
+	padding: 1rem;
+	margin: 0.5rem 0;
+	border-radius: 0 5px 5px 0;
 }
 
 .status-code {
-    font-weight: bold;
-    color: #28a745;
+	font-weight: bold;
+	color: #28a745;
 }
 
 .status-code.error {
-    color: #dc3545;
+	color: #dc3545;
 }
 
 .error-response {
-    border-left-color: #dc3545;
+	border-left-color: #dc3545;
 }
 
 .intro {
-    padding: 2rem;
-    border-radius: 10px;
-    margin-bottom: 2rem;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+	padding: 2rem;
+	border-radius: 10px;
+	margin-bottom: 2rem;
+	box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 .base-url {
-    padding: 1rem;
-    border-radius: 5px;
-    border-left: 4px solid #2196f3;
-    margin: 1rem 0;
+	padding: 1rem;
+	border-radius: 5px;
+	border-left: 4px solid #2196f3;
+	margin: 1rem 0;
 }
 
 @media (max-width: 768px) {
-    .nav ul {
-        flex-direction: column;
-    }
+	.nav ul {
+		flex-direction: column;
+	}
 
-    h1 {
-        font-size: 2rem;
-    }
+	h1 {
+		font-size: 2rem;
+	}
 
-    .container {
-        padding: 10px;
-    }
+	.container {
+		padding: 10px;
+	}
 }
