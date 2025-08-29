@@ -1,0 +1,93 @@
+{
+	"title": "The Users object",
+	"endPoints": [
+		{
+			"id": "get-users",
+			"method": "GET",
+			"route": "api/users",
+			"description": "Retrieve a list of users.",
+			"queryParameters": [
+				{
+					"name": "search",
+					"type": "string",
+					"description": "Search users by username or email.",
+					"example": "johndoe"
+				},
+				{
+					"name": "sortBy",
+					"type": "string",
+					"description": "Sort users by a specific attribute (e.g., 'createdAt', 'username').",
+					"example": "createdAt"
+				},
+				{
+					"name": "order",
+					"type": "'asc' | 'desc'",
+					"description": "Order of sorting: ascending ('asc') or descending ('desc').",
+					"example": "asc"
+				},
+				{
+					"name": "limit",
+					"type": "number",
+					"description": "Limit the number of users returned.",
+					"example": 10
+				},
+				{
+					"name": "offset",
+					"type": "number",
+					"description": "Offset for pagination.",
+					"example": 0
+				}
+			],
+			"statusCodes": [
+				{
+					"code": 200,
+					"description": "Successful retrieval of users."
+				},
+				{
+					"code": 400,
+					"description": "Bad request. Missing or invalid parameters."
+				},
+				{
+					"code": 401,
+					"description": "Unauthorized. Invalid or missing authentication token."
+				},
+				{
+					"code": 500,
+					"description": "Internal server error."
+				}
+			]
+		}
+	],
+	"attributes": [
+		{
+			"name": "publicId",
+			"type": "string",
+			"description": "A unique public identifier for the user.",
+			"example": "f77de"
+		},
+		{
+			"name": "username",
+			"type": "string",
+			"description": "The user's username.",
+			"example": "johndoe"
+		},
+		{
+			"name": "name",
+			"type": "string",
+			"description": "The user's full name.",
+			"example": "John Doe"
+		},
+		{
+			"name": "email",
+			"type": "string",
+			"description": "The user's email address.",
+			"example": ""
+		},
+		{
+			"name": "createdAt",
+			"type": "string",
+			"description": "The date and time when the user was created.",
+			"example": "2023-10-01T12:34:56Z"
+		}
+	]
+}

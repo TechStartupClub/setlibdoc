@@ -1,5 +1,5 @@
 <script lang="ts">
-	import EndpointContainer from '$lib/components/ui/endpointcontainer/endpoint-container.svelte';
+	import EndpointContainer from '$lib/components/ui/end-point-container/endpoint-container.svelte';
 	import type { ApiObject, Endpoint } from '$lib/types/apiObject';
 	import type { RouteColorMap } from '$lib/types/httpMethods';
 	import { TypeColors } from '$lib/types/typeNames';
@@ -10,6 +10,9 @@
 	let { apiObject }: Props = $props();
 
 	const endpoints: Endpoint[] = apiObject.endPoints;
+	/**
+	 * Mapping of HTTP methods to their corresponding routes for color coding in the UI.
+	 */
 	let routes: RouteColorMap = endpoints.map((endpoint) => [
 		endpoint.method,
 		endpoint.route

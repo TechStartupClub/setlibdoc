@@ -1,0 +1,127 @@
+{
+	"title": "The Tickets object",
+	"endPoints": [
+		{
+			"id": "get-tickets",
+			"method": "GET",
+			"route": "api/tickets",
+			"description": "Retrieve a list of support tickets.",
+			"queryParameters": [
+				{
+					"name": "status",
+					"type": "string",
+					"description": "Filter tickets by their status (e.g., 'all', 'open', 'closed').",
+					"example": "open"
+				},
+				{
+					"name": "search",
+					"type": "string",
+					"description": "Search tickets by subject or message content.",
+					"example": "login issue"
+				},
+				{
+					"name": "createdBy",
+					"type": "string",
+					"description": "Filter tickets by the creator's name.",
+					"example": "John Doe"
+				},
+				{
+					"name": "sortBy",
+					"type": "string",
+					"description": "Sort tickets by a specific attribute (e.g., 'createdAt', 'status', 'email').",
+					"example": "createdAt"
+				}
+			],
+			"statusCodes": [
+				{
+					"code": 200,
+					"description": "Successful retrieval of tickets."
+				},
+				{
+					"code": 400,
+					"description": "Bad request. Missing or invalid parameters."
+				},
+				{
+					"code": 401,
+					"description": "Unauthorized. Invalid or missing authentication token."
+				},
+				{
+					"code": 500,
+					"description": "Internal server error."
+				}
+			]
+		},
+		{
+			"id": "new-ticket",
+			"method": "POST",
+			"route": "api/tickets",
+			"description": "Submit a new support ticket.",
+			"bodyParameters": [
+				{
+					"name": "subject",
+					"subject": "string",
+					"description": "The subject of the ticket.",
+					"example": "Issue with login"
+				},
+				{
+					"name": "message",
+					"type": "string",
+					"description": "The detailed message or description of the ticket.",
+					"example": "I am unable to log in with my credentials."
+				}
+			],
+			"statusCodes": [
+				{
+					"code": 201,
+					"description": "Ticket created successfully."
+				},
+				{
+					"code": 400,
+					"description": "Bad request. Missing or invalid parameters."
+				},
+				{
+					"code": 500,
+					"description": "Internal server error."
+				}
+			]
+		}
+	],
+	"attributes": [
+		{
+			"name": "email",
+			"type": "string",
+			"description": "The email address associated with the ticket.",
+			"example": "johndoe@uw.edu"
+		},
+		{
+			"name": "name",
+			"type": "string",
+			"description": "The name of the person who submitted the ticket.",
+			"example": "John Doe"
+		},
+		{
+			"name": "subject",
+			"type": "string",
+			"description": "The subject of the ticket.",
+			"example": "Issue with login"
+		},
+		{
+			"name": "message",
+			"type": "string",
+			"description": "The detailed message or description of the ticket.",
+			"example": "I am unable to log in with my credentials."
+		},
+		{
+			"name": "status",
+			"type": "'open' | 'closed'",
+			"description": "Indicates whether the ticket is open or closed.",
+			"example": "open"
+		},
+		{
+			"name": "createdAt",
+			"type": "string (ISO 8601 date)",
+			"description": "The date and time when the ticket was created.",
+			"example": "2023-10-01T12:34:56Z"
+		}
+	]
+}

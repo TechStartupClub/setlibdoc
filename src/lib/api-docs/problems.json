@@ -29,7 +29,7 @@
 					"name": "createdBy",
 					"type": "string",
 					"description": "Filter problems by the creator's name.",
-					"example": "JohnDoe"
+					"example": "John Doe"
 				},
 				{
 					"name": "sortBy",
