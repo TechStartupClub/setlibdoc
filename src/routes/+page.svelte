@@ -7,10 +7,9 @@
 	<section id="introduction">
 		<h2 class="text-2xl font-bold mb-2">API Reference</h2>
 		<p class="mb-4">
-			Welcome to the SetLib API reference documentation. Here you'll find detailed information about
-			our API endpoints, request and response formats, authentication methods, and error codes.
-			Whether you're a developer integrating with SetLib or just exploring our capabilities, this
-			guide will help you navigate and utilize our API effectively.
+			The SetLib API is organized around REST. Our API has predictable resource-oriented URLs,
+			accepts form-encoded request bodies, returns JSON-encoded responses, and uses standard HTTP
+			response codes, authentication, and verbs.
 		</p>
 	</section>
 	<Separator />
