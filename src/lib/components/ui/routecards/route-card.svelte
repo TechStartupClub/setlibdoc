@@ -4,7 +4,7 @@
 	let { endPoint }: { endPoint: Endpoint } = $props();
 </script>
 
-<div class="border border-border rounded-md p-4 mb-4">
+<div class="border border-border rounded-md p-4 mb-4" id={endPoint.id}>
 	<div class="flex items-center mb-2">
 		<span class={`font-mono font-bold mr-4 ${endPoint.method ? endPoint.method : 'text-gray-500'}`}
 			>{endPoint.method ?? 'UNKNOWN'}</span

@@ -1,7 +1,8 @@
 {
-	"title": "The Users object",
+	"title": "The Problems object",
 	"endPoints": [
 		{
+			"id": "get-problems",
 			"method": "GET",
 			"route": "api/problems",
 			"description": "Retrieve a list of problems.",
@@ -83,21 +84,25 @@
 			]
 		},
 		{
+			"id": "create-problem",
 			"method": "POST",
 			"route": "api/problems",
 			"description": "Create a new problem."
 		},
 		{
+			"id": "get-problem-by-id",
 			"method": "GET",
 			"route": "api/problems/{id}",
 			"description": "Retrieve a specific problem by its ID."
 		},
 		{
+			"id": "update-problem-by-id",
 			"method": "PUT",
 			"route": "api/problems/{id}",
 			"description": "Update a specific problem by its ID."
 		},
 		{
+			"id": "delete-problem-by-id",
 			"method": "DELETE",
 			"route": "api/problems/{id}",
 			"description": "Delete a specific problem by its ID."

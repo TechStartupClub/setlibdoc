@@ -1,4 +1,26 @@
 <script lang="ts" module>
+	import auth from '$lib/apidocs/auth.json';
+	import problems from '$lib/apidocs/problems.json';
+	import tickets from '$lib/apidocs/tickets.json';
+	import users from '$lib/apidocs/users.json';
+
+	const authObjectLinks = auth.endPoints.map((endpoint: { description: any; id: any }) => ({
+		description: endpoint.description,
+		url: `/setlibdoc/auth/#${endpoint.id}`
+	}));
+	const problemObjectLinks = problems.endPoints.map((endpoint: { description: any; id: any }) => ({
+		description: endpoint.description,
+		url: `/setlibdoc/problems/#${endpoint.id}`
+	}));
+	const ticketObjectLinks = tickets.endPoints.map((endpoint: { description: any; id: any }) => ({
+		description: endpoint.description,
+		url: `/setlibdoc/tickets/#${endpoint.id}`
+	}));
+	const userObjectLinks = users.endPoints.map((endpoint: { description: any; id: any }) => ({
+		description: endpoint.description,
+		url: `/setlibdoc/users/#${endpoint.id}`
+	}));
+
 	const data = {
 		navMain: [
 			{
@@ -26,15 +48,15 @@
 					},
 					{
 						title: 'Login',
-						url: '/setlibdoc/auth/#login'
+						url: authObjectLinks[0].url
 					},
 					{
 						title: 'Register',
-						url: '/setlibdoc/auth/#register'
+						url: authObjectLinks[1].url
 					},
 					{
 						title: 'Logout',
-						url: '/setlibdoc/auth#logout'
+						url: authObjectLinks[2].url
 					}
 				]
 			},
@@ -48,15 +70,15 @@
 					},
 					{
 						title: 'Create a user',
-						url: '/setlibdoc/users/#create'
+						url: userObjectLinks[0].url
 					},
 					{
 						title: 'Edit a user',
-						url: '/setlibdoc/users/#edit'
+						url: userObjectLinks[1].url
 					},
 					{
 						title: 'Delete a user',
-						url: '/setlibdoc/users/#delete'
+						url: userObjectLinks[2].url
 					}
 				]
 			},
@@ -70,15 +92,23 @@
 					},
 					{
 						title: 'Create a problem',
-						url: '/setlibdoc/problems/#create'
+						url: problemObjectLinks[0].url
 					},
 					{
 						title: 'Edit a problem',
-						url: '/setlibdoc/problems/#edit'
+						url: problemObjectLinks[1].url
 					},
 					{
-						title: 'Delete a problem',
-						url: '/setlibdoc/problems/#delete'
+						title: 'Get problem by id',
+						url: problemObjectLinks[2].url
+					},
+					{
+						title: 'Update problem by id',
+						url: problemObjectLinks[2].url
+					},
+					{
+						title: 'Delete problem by id',
+						url: problemObjectLinks[2].url
 					}
 				]
 			},
@@ -92,15 +122,15 @@
 					},
 					{
 						title: 'Create a ticket',
-						url: '/setlibdoc/tickets#create'
+						url: ticketObjectLinks[0].url
 					},
 					{
 						title: 'Edit a ticket',
-						url: '/setlibdoc/tickets#edit'
+						url: ticketObjectLinks[1].url
 					},
 					{
 						title: 'Delete a ticket',
-						url: '/setlibdoc/tickets#delete'
+						url: ticketObjectLinks[2].url
 					}
 				]
 			}

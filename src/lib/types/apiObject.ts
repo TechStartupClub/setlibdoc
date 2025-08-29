@@ -2,6 +2,7 @@ import type { HttpMethods } from './httpMethods';
 import type { Type } from './typeNames';
 
 export type Endpoint = {
+	id: string;
 	method: HttpMethods;
 	route: string;
 	description: string;
