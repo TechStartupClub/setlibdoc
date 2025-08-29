@@ -26,6 +26,9 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Format and lint
+        run: npm run format && npm run lint
+
       - name: Build SvelteKit app
         run: npm run build
 

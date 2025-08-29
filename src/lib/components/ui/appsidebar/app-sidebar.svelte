@@ -3,104 +3,104 @@
 		navMain: [
 			{
 				title: 'Overview',
-				url: '/',
+				url: '/setlibdoc',
 				items: [
 					{
 						title: 'Introduction',
 						isActive: true,
-						url: '#introduction'
+						url: '/setlibdoc#introduction'
 					},
 					{
 						title: 'Errors',
-						url: '#errors'
+						url: '/setlibdoc#errors'
 					}
 				]
 			},
 			{
 				title: 'Auth',
-				url: '/auth',
+				url: '/setlibdoc/auth',
 				items: [
 					{
 						title: 'The Auth object',
-						url: '/auth/#object'
+						url: '/setlibdoc/auth/#object'
 					},
 					{
 						title: 'Login',
-						url: '/auth/#login'
+						url: '/setlibdoc/auth/#login'
 					},
 					{
 						title: 'Register',
-						url: '/auth/#register'
+						url: '/setlibdoc/auth/#register'
 					},
 					{
 						title: 'Logout',
-						url: '/auth#logout'
+						url: '/setlibdoc/auth#logout'
 					}
 				]
 			},
 			{
 				title: 'Users',
-				url: '/users',
+				url: '/setlibdoc/users',
 				items: [
 					{
 						title: 'The User object',
-						url: '/users/#object'
+						url: '/setlibdoc/users/#object'
 					},
 					{
 						title: 'Create a user',
-						url: '/users/#create'
+						url: '/setlibdoc/users/#create'
 					},
 					{
 						title: 'Edit a user',
-						url: '/users/#edit'
+						url: '/setlibdoc/users/#edit'
 					},
 					{
 						title: 'Delete a user',
-						url: '/users/#delete'
+						url: '/setlibdoc/users/#delete'
 					}
 				]
 			},
 			{
 				title: 'Problems',
-				url: '/problems',
+				url: '/setlibdoc/problems',
 				items: [
 					{
 						title: 'The Problem object',
-						url: '/problems/#object'
+						url: '/setlibdoc/problems/#object'
 					},
 					{
 						title: 'Create a problem',
-						url: '/problems/#create'
+						url: '/setlibdoc/problems/#create'
 					},
 					{
 						title: 'Edit a problem',
-						url: '/problems/#edit'
+						url: '/setlibdoc/problems/#edit'
 					},
 					{
 						title: 'Delete a problem',
-						url: '/problems/#delete'
+						url: '/setlibdoc/problems/#delete'
 					}
 				]
 			},
 			{
 				title: 'Tickets',
-				url: '/tickets',
+				url: '/setlibdoc/tickets',
 				items: [
 					{
 						title: 'The Tickets object',
-						url: '/tickets/#object'
+						url: '/setlibdoc/tickets/#object'
 					},
 					{
 						title: 'Create a ticket',
-						url: '/tickets#create'
+						url: '/setlibdoc/tickets#create'
 					},
 					{
 						title: 'Edit a ticket',
-						url: '/tickets#edit'
+						url: '/setlibdoc/tickets#edit'
 					},
 					{
 						title: 'Delete a ticket',
-						url: '/tickets#delete'
+						url: '/setlibdoc/tickets#delete'
 					}
 				]
 			}
