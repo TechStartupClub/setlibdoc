@@ -13,7 +13,7 @@
 					{
 						title: 'Errors',
 						url: '#errors'
-					}
+					},
 				]
 			},
 			{
@@ -23,27 +23,43 @@
 					{
 						title: 'The Auth object',
 						url: 'auth/object'
-					}
+					},
+					{
+						title: 'Login',
+						url: '#login'
+					},
+					{
+						title: 'Register',
+						url: '#register'
+					},
+					{
+						title: 'Logout',
+						url: '#logout'
+					},
 				]
 			},
-			// {
-			// 	title: 'Users',
-			// 	url: 'users',
-			// 	items: [
-			// 		{
-			// 			title: 'Users',
-			// 			url: '#'
-			// 		},
-			// 		{
-			// 			title: 'Students',
-			// 			url: '#'
-			// 		},
-			// 		{
-			// 			title: 'Professors',
-			// 			url: '#'
-			// 		}
-			// 	]
-			// },
+			{
+				title: 'Users',
+				url: 'users',
+				items: [
+					{
+						title: 'The User object',
+						url: '#'
+					},
+					{
+						title: 'Create a user',
+						url: '#create'
+					},
+					{
+						title: 'Edit a user',
+						url: '#edit'
+					},
+					{
+						title: 'Delete a user',
+						url: '#delete'
+					},
+				]
+			},
 			{
 				title: 'Problems',
 				url: '/problems',
@@ -51,7 +67,19 @@
 					{
 						title: 'The Problem object',
 						url: 'problems/object'
-					}
+					},
+					{
+						title: 'Create a problem',
+						url: '#create'
+					},
+					{
+						title: 'Edit a problem',
+						url: '#edit'
+					},
+					{
+						title: 'Delete a problem',
+						url: '#delete'
+					},
 				]
 			},
 			{
@@ -65,7 +93,15 @@
 					{
 						title: 'Create a ticket',
 						url: '#create'
-					}
+					},
+					{
+						title: 'Edit a ticket',
+						url: '#edit'
+					},
+					{
+						title: 'Delete a ticket',
+						url: '#delete'
+					},
 				]
 			}
 		]

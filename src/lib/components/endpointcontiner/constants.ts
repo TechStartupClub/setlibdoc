@@ -7,11 +7,11 @@ export enum methods {
 }
 
 export const methodColors: Record<methods, string> = {
-    [methods.GET]: '#2BE066',
+    [methods.GET]: '#04a5e5',
     [methods.POST]: '#E0BD2B',
     [methods.PATCH]: '#2B33E0',
     [methods.PUT]: '#5361FB',
-    [methods.DELETE]: '#E02F2B',
+    [methods.DELETE]: '#e64553',
 };
 
 export type Method = keyof typeof methodColors;
