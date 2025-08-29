@@ -1,8 +1,11 @@
 <script lang="ts">
-	import EndpointContainer from '$lib/components/endpoint-container.svelte';
-	let data = [
-		['GET', '/api/problems'],
-		['POST', '/api/problems']
+	import { methodColors, methods, type RouteMap } from '$lib/components/endpointcontiner/constants';
+	import EndpointContainer from '$lib/components/endpointcontiner/endpoint-container.svelte';
+
+	let data: RouteMap = [
+		[methods.GET, '/api/problems'],
+		[methods.POST, '/api/problems'],
+		[methods.DELETE, '/api/problems'],
 	];
 </script>
 

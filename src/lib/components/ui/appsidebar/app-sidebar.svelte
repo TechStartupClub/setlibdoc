@@ -3,64 +3,68 @@
 		navMain: [
 			{
 				title: 'Overview',
-				url: 'overview',
+				url: '/',
 				items: [
 					{
 						title: 'Introduction',
 						isActive: true,
-						url: '#'
+						url: '#introduction'
 					},
 					{
-						title: 'Project Structure',
-						url: '#'
+						title: 'Errors',
+						url: '#errors'
 					}
 				]
 			},
 			{
-				title: 'Public',
-				url: 'public',
+				title: 'Auth',
+				url: '/auth',
 				items: [
 					{
-						title: 'Public',
-						url: '#'
+						title: 'The Auth object',
+						url: 'auth/object'
 					}
 				]
 			},
-			{
-				title: 'Users',
-				url: 'users',
-				items: [
-					{
-						title: 'Users',
-						url: '#'
-					},
-					{
-						title: 'Students',
-						url: '#'
-					},
-					{
-						title: 'Professors',
-						url: '#'
-					}
-				]
-			},
+			// {
+			// 	title: 'Users',
+			// 	url: 'users',
+			// 	items: [
+			// 		{
+			// 			title: 'Users',
+			// 			url: '#'
+			// 		},
+			// 		{
+			// 			title: 'Students',
+			// 			url: '#'
+			// 		},
+			// 		{
+			// 			title: 'Professors',
+			// 			url: '#'
+			// 		}
+			// 	]
+			// },
 			{
 				title: 'Problems',
-				url: 'problems',
+				url: '/problems',
 				items: [
 					{
-						title: 'Problems',
-						url: '#'
+						title: 'The Problem object',
+						url: 'problems/object'
 					}
 				]
 			},
 			{
-				title: 'Support',
-				url: 'support',
+				title: 'Tickets',
+				url: '/tickets',
 				items: [
 					{
-						title: 'Tickets',
-						url: '#'
+						title: 'The Tickets object',
+						url: '/tickets/object'
+					},
+					{
+						title: 'Create a ticket',
+						url: '#create'
 					}
 				]
 			}
@@ -70,7 +74,7 @@
 
 <script lang="ts">
 	import * as Sidebar from '$lib/components/ui/sidebar/index.js';
-	import GalleryVerticalEndIcon from '@lucide/svelte/icons/gallery-vertical-end';
+	import GalleryVerticalEndIcon from '@lucide/svelte/icons/notebook';
 	import type { ComponentProps } from 'svelte';
 	let { ref = $bindable(null), ...restProps }: ComponentProps<typeof Sidebar.Root> = $props();
 </script>
@@ -79,16 +83,16 @@
 	<Sidebar.Header>
 		<Sidebar.Menu>
 			<Sidebar.MenuItem>
-				<Sidebar.MenuButton size="lg">
+				<Sidebar.MenuButton size="sm">
 					{#snippet child({ props })}
-						<a href="##" {...props}>
+						<a href="/" {...props}>
 							<div
 								class="bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg"
 							>
 								<GalleryVerticalEndIcon class="size-4" />
 							</div>
 							<div class="flex flex-col gap-0.5 leading-none">
-								<span class="font-medium">Documentation</span>
+								<span class="font-medium">SETLib</span>
 								<span class="">v1.0.0</span>
 							</div>
 						</a>
