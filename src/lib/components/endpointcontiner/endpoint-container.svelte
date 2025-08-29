@@ -10,7 +10,7 @@
 			<div class="flex flex-col items-center">
 				<p style="color: {methodColors[method]}" class="font-bold">{method}</p>
 			</div>
-			<p class="bg-sk">{route}</p>
+			<p class="bg-mauve">{route}</p>
 		</div>
 	{/each}
 </div>

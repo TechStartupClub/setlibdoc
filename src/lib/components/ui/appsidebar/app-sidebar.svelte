@@ -13,7 +13,7 @@
 					{
 						title: 'Errors',
 						url: '#errors'
-					},
+					}
 				]
 			},
 			{
@@ -35,7 +35,7 @@
 					{
 						title: 'Logout',
 						url: '#logout'
-					},
+					}
 				]
 			},
 			{
@@ -44,7 +44,7 @@
 				items: [
 					{
 						title: 'The User object',
-						url: '#'
+						url: 'users/object'
 					},
 					{
 						title: 'Create a user',
@@ -57,7 +57,7 @@
 					{
 						title: 'Delete a user',
 						url: '#delete'
-					},
+					}
 				]
 			},
 			{
@@ -79,7 +79,7 @@
 					{
 						title: 'Delete a problem',
 						url: '#delete'
-					},
+					}
 				]
 			},
 			{
@@ -88,7 +88,7 @@
 				items: [
 					{
 						title: 'The Tickets object',
-						url: '/tickets/object'
+						url: 'tickets/object'
 					},
 					{
 						title: 'Create a ticket',
@@ -101,7 +101,7 @@
 					{
 						title: 'Delete a ticket',
 						url: '#delete'
-					},
+					}
 				]
 			}
 		]

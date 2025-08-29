@@ -2,41 +2,41 @@ const { addDynamicIconSelectors } = require('@iconify/tailwind');
 
 module.exports = {
 	content: ['./src/**/*.{html,js,svelte,ts}'],
-	theme: {
-		extend: {
-			colors: {
-				rosewater: "#dc8a78",
-				flamingo: "#dd7878",
-				pink: "#ea76cb",
-				mauve: "#8839ef",
-				red: "#d20f39",
-				maroon: "#e64553",
-				peach: "#fe640b",
-				yellow: "#df8e1d",
-				green: "#40a02b",
-				teal: "#179299",
-				sky: "#04a5e5",
-				sapphire: "#209fb5",
-				blue: "#1e66f5",
-				lavender: "#7287fd",
+	 theme: {
+    extend: {
+      colors: {
+        rosewater: "var(--rosewater)",
+        flamingo: "var(--flamingo)",
+        pink: "var(--pink)",
+        mauve: "var(--mauve)",
+        red: "var(--red)",
+        maroon: "var(--maroon)",
+        peach: "var(--peach)",
+        yellow: "var(--yellow)",
+        green: "var(--green)",
+        teal: "var(--teal)",
+        sky: "var(--sky)",
+        sapphire: "var(--sapphire)",
+        blue: "var(--blue)",
+        lavender: "var(--lavender)",
 
-				text: "#4c4f69",
-				subtext0: "#6c6f85",
-				subtext1: "#5c5f77",
+        text: "var(--text)",
+        subtext0: "var(--subtext0)",
+        subtext1: "var(--subtext1)",
 
-				overlay0: "#9ca0b0",
-				overlay1: "#8c8fa1",
-				overlay2: "#7c7f93",
+        overlay0: "var(--overlay0)",
+        overlay1: "var(--overlay1)",
+        overlay2: "var(--overlay2)",
 
-				surface0: "#ccd0da",
-				surface1: "#bcc0cc",
-				surface2: "#acb0be",
+        surface0: "var(--surface0)",
+        surface1: "var(--surface1)",
+        surface2: "var(--surface2)",
 
-				base: "#eff1f5",
-				mantle: "#e6e9ef",
-				crust: "#dce0e8",
-			}
-		},
-	},
+        base: "var(--base)",
+        mantle: "var(--mantle)",
+        crust: "var(--crust)",
+      },
+    },
+  },
 	plugins: [addDynamicIconSelectors()]
 };

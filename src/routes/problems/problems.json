@@ -1,0 +1,37 @@
+{
+    "title": "The Problem object",
+    "attributes": [
+        {
+            "name": "id",
+            "type": "string",
+            "description": "The unique identifier for the problem."
+        },
+        {
+            "name": "title",
+            "type": "string",
+            "description": "A brief title describing the problem.",
+            "parameters": [
+                {
+                    "name": "maxLength",
+                    "type": "number",
+                    "description": "The maximum length of the title."
+                }
+            ]
+        },
+        {
+            "name": "description",
+            "type": "string",
+            "description": "A detailed description of the problem."
+        },
+        {
+            "name": "difficulty",
+            "type": "'easy' | 'medium' | 'hard'",
+            "description": "The difficulty level of the problem."
+        },
+        {
+            "name": "tags",
+            "type": "string[]",
+            "description": "An array of tags associated with the problem."
+        }
+    ]
+}
