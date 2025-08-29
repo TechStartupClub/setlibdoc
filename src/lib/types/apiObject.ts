@@ -1,3 +1,4 @@
+import type { HttpErrors } from './httpErrors';
 import type { HttpMethods } from './httpMethods';
 import type { Type } from './typeNames';
 
@@ -33,9 +34,13 @@ export type Endpoint = {
 		description: string;
 		example: string | number;
 	}>;
-	responseType: Type;
+	response?: {
+		type: Type;
+		description: string;
+		example?: string | number | object | Array<string | number | object>;
+	};
 	statusCodes?: Array<{
-		code: number;
+		code: HttpErrors;
 		description: string;
 	}>;
 };

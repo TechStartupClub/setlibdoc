@@ -9,7 +9,12 @@ export enum ApiTypes {
 	OBJECT = 'object',
 	ARRAY = 'array',
 	NULL = 'null',
-	ANY = 'any'
+	ANY = 'any',
+	STRING_ARRAY = 'string[]',
+	INTEGER_ARRAY = 'integer[]',
+	FLOAT_ARRAY = 'float[]',
+	OBJECT_ARRAY = 'object[]',
+	ENUM = 'enum'
 }
 
 /**
@@ -23,7 +28,12 @@ export const TypeColors: Record<ApiTypes, string> = {
 	[ApiTypes.OBJECT]: 'text-cat-mauve',
 	[ApiTypes.ARRAY]: 'text-cat-purple',
 	[ApiTypes.NULL]: 'text-cat-rosewater',
-	[ApiTypes.ANY]: 'text-cat-sky'
+	[ApiTypes.ANY]: 'text-cat-sky',
+	[ApiTypes.STRING_ARRAY]: 'text-cat-blue',
+	[ApiTypes.INTEGER_ARRAY]: 'text-cat-green',
+	[ApiTypes.FLOAT_ARRAY]: 'text-cat-teal',
+	[ApiTypes.OBJECT_ARRAY]: 'text-cat-purple',
+	[ApiTypes.ENUM]: 'text-cat-peach'
 };
 
 /**

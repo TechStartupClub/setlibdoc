@@ -15,6 +15,22 @@ export enum HttpErrors {
 }
 
 /**
+ * Array of tuples pairing each HTTP error with its title and description.
+ */
+export const ErrorCodes: Array<{ code: ErrorCode, name: string, description: string; }> = [
+	{ code: HttpErrors.OK, name: 'OK', description: 'The request has succeeded.' },
+	{ code: HttpErrors.CREATED, name: 'Created', description: 'The request has been fulfilled and resulted in a new resource being created.' },
+	{ code: HttpErrors.NO_CONTENT, name: 'No Content', description: 'The server successfully processed the request and is not returning any content.' },
+	{ code: HttpErrors.BAD_REQUEST, name: 'Bad Request', description: 'The server could not understand the request due to invalid syntax.' },
+	{ code: HttpErrors.UNAUTHORIZED, name: 'Unauthorized', description: 'The client must authenticate itself to get the requested response.' },
+	{ code: HttpErrors.FORBIDDEN, name: 'Forbidden', description: 'The client does not have access rights to the content.' },
+	{ code: HttpErrors.NOT_FOUND, name: 'Not Found', description: 'The server can not find the requested resource.' },
+	{ code: HttpErrors.INTERNAL_SERVER_ERROR, name: 'Internal Server Error', description: 'The server has encountered a situation it doesn\'t know how to handle.' },
+	{ code: HttpErrors.BAD_GATEWAY, name: 'Bad Gateway', description: 'The server was acting as a gateway or proxy and received an invalid response from the upstream server.' },
+	{ code: HttpErrors.SERVICE_UNAVAILABLE, name: 'Service Unavailable', description: 'The server is not ready to handle the request, often due to maintenance or overload'}
+];
+
+/**
  * Mapping of HTTP errors to their corresponding color classes for UI representation.
  */
 export const ErrorColors: Record<HttpErrors, string> = {
@@ -33,9 +49,9 @@ export const ErrorColors: Record<HttpErrors, string> = {
 /**
  * Type representing the keys of the ErrorColors mapping, effectively the HTTP errors.
  */
-export type ErrorMethod = keyof typeof ErrorColors;
+export type ErrorCode = keyof typeof ErrorColors;
 
 /**
  * Array of tuples pairing each HTTP error with its corresponding color class.
  */
-export type ErrorColorMap = Array<[ErrorMethod, string]>;
+export type ErrorColorMap = Array<[ErrorCode, string]>;

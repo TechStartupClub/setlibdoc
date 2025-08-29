@@ -1,4 +1,5 @@
 import type { ApiObject } from '$lib/types/apiObject';
+import { HttpErrors } from '$lib/types/httpErrors';
 import { HttpMethods } from '$lib/types/httpMethods';
 import { ApiTypes } from '$lib/types/typeNames';
 
@@ -9,6 +10,24 @@ import { ApiTypes } from '$lib/types/typeNames';
  * @returns mapped ApiTypes enum value
  */
 export const mapType = (type: string) => {
+	if (type.endsWith('[]')) {
+		const baseType = type.slice(0, -2);
+		switch (baseType) {
+			case 'string':
+				return ApiTypes.STRING_ARRAY;
+			case 'number':
+				return ApiTypes.INTEGER_ARRAY;
+			case 'object':
+				return ApiTypes.OBJECT_ARRAY;
+			default:
+				return ApiTypes.ARRAY;
+		}
+	}
+
+	if (type.includes('|')) {
+		return ApiTypes.ENUM;
+	}
+
 	switch (type) {
 		case 'string':
 			return ApiTypes.STRING;
@@ -57,6 +76,39 @@ export const mapMethod = (method: string) => {
 };
 
 /**
+ * Maps a numeric HTTP status code to the corresponding HttpErrors enum value.
+ * 
+ * @param code - HTTP status code as a number
+ * @returns corresponding HttpErrors enum value
+ */
+export const mapError = (code: number) => {
+	switch (code) {
+		case 200:
+			return HttpErrors.OK;
+		case 201:
+			return HttpErrors.CREATED;
+		case 204:
+			return HttpErrors.NO_CONTENT;
+		case 400:
+			return HttpErrors.BAD_REQUEST;
+		case 401:
+			return HttpErrors.UNAUTHORIZED;
+		case 403:
+			return HttpErrors.FORBIDDEN;
+		case 404:
+			return HttpErrors.NOT_FOUND;
+		case 500:
+			return HttpErrors.INTERNAL_SERVER_ERROR;
+		case 502:
+			return HttpErrors.BAD_GATEWAY;
+		case 503:
+			return HttpErrors.SERVICE_UNAVAILABLE;
+		default:
+			return HttpErrors.INTERNAL_SERVER_ERROR;
+	}
+};
+
+/**
  * Maps a raw API object to an ApiObject with proper types for methods and parameters.
  *
  * @param object - raw API object
@@ -71,32 +123,45 @@ export const mapApiObject = (object: any): ApiObject => ({
 			bodyParameters: any[];
 			headers: any[];
 			formDataParameters: any[];
+			response: any;
+			statusCodes: any[];
 		}) => ({
 			...endPoint,
 			method: mapMethod(endPoint.method),
 			queryParameters:
-				endPoint.queryParameters?.map((param: { type: string }) => ({
+				endPoint.queryParameters?.map((param: { type: string; }) => ({
 					...param,
 					type: mapType(param.type)
 				})) || [],
 			bodyParameters:
-				endPoint.bodyParameters?.map((param: { type: string }) => ({
+				endPoint.bodyParameters?.map((param: { type: string; }) => ({
 					...param,
 					type: mapType(param.type)
 				})) || [],
 			headers:
-				endPoint.headers?.map((param: { type: string }) => ({
+				endPoint.headers?.map((param: { type: string; }) => ({
 					...param,
 					type: mapType(param.type)
 				})) || [],
 			formDataParameters:
-				endPoint.formDataParameters?.map((param: { type: string }) => ({
+				endPoint.formDataParameters?.map((param: { type: string; }) => ({
 					...param,
 					type: mapType(param.type)
+				})) || [],
+			response: endPoint.response
+				? {
+					...endPoint.response,
+					type: mapType(endPoint.response.type)
+				}
+				: undefined,
+			statusCodes:
+				endPoint.statusCodes?.map((status: { code: number; }) => ({
+					...status,
+					code: mapError(status.code)
 				})) || []
 		})
 	),
-	attributes: object.attributes.map((attribute: { type: string }) => ({
+	attributes: object.attributes.map((attribute: { type: string; }) => ({
 		...attribute,
 		type: mapType(attribute.type)
 	}))

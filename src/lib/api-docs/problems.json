@@ -56,6 +56,30 @@
 					"example": 0
 				}
 			],
+			"response": {
+				"type": "object[]",
+				"description": "An array of problem objects matching the query parameters.",
+				"example": [
+					{
+						"id": 72,
+						"diff": "hard",
+						"text": "{}",
+						"problemStatus": "ok",
+						"courses": [
+							"algorithms"
+						],
+						"categories": [
+							"algorithms",
+							"java",
+							"runtime"
+						],
+						"name": "Tim Apple",
+						"email": "whydontyouhaveaseat@gmail.com",
+						"createdAt": "2025-08-14 18:25:39.353362",
+						"updatedAt": "2025-08-14 18:25:39.353362"
+					}
+				]
+			},
 			"statusCodes": [
 				{
 					"code": 200,
@@ -68,14 +92,6 @@
 				{
 					"code": 401,
 					"description": "Unauthorized access."
-				},
-				{
-					"code": 403,
-					"description": "Forbidden access."
-				},
-				{
-					"code": 404,
-					"description": "Endpoint not found."
 				},
 				{
 					"code": 500,
@@ -123,12 +139,12 @@
 		{
 			"name": "problemStatus",
 			"type": "'review' | 'ok' | 'deleted' | 'rejected'",
-			"description": "The current status of the problem."
+			"description": "The current status of the problem. Possible values are 'review', 'ok', 'deleted', and 'rejected'."
 		},
 		{
 			"name": "difficulty",
 			"type": "'easy' | 'medium' | 'hard' | 'null'",
-			"description": "The difficulty level of the problem."
+			"description": "The difficulty level of the problem. Possible values are 'easy', 'medium', 'hard', and 'null'."
 		},
 		{
 			"name": "categories",
