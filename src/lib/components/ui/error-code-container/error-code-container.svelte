@@ -21,7 +21,10 @@
 		{#each ErrorCodes as errCode}
 			<div class="mb-2" id={errCode.code as unknown as string}>
 				<div class="flex items-center gap-2">
-					<span class={`font-mono font-bold mr-4 ${errCode.code ? ErrorColors[errCode.code] : 'text-gray-500'}`} >{errCode.code}</span>
+					<span
+						class={`font-mono font-bold mr-4 ${errCode.code ? ErrorColors[errCode.code] : 'text-gray-500'}`}
+						>{errCode.code}</span
+					>
 					<span>{errCode.name}</span>
 				</div>
 				<span>{errCode.description}</span>

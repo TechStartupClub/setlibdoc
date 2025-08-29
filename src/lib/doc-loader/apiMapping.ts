@@ -77,7 +77,7 @@ export const mapMethod = (method: string) => {
 
 /**
  * Maps a numeric HTTP status code to the corresponding HttpErrors enum value.
- * 
+ *
  * @param code - HTTP status code as a number
  * @returns corresponding HttpErrors enum value
  */
@@ -129,39 +129,39 @@ export const mapApiObject = (object: any): ApiObject => ({
 			...endPoint,
 			method: mapMethod(endPoint.method),
 			queryParameters:
-				endPoint.queryParameters?.map((param: { type: string; }) => ({
+				endPoint.queryParameters?.map((param: { type: string }) => ({
 					...param,
 					type: mapType(param.type)
 				})) || [],
 			bodyParameters:
-				endPoint.bodyParameters?.map((param: { type: string; }) => ({
+				endPoint.bodyParameters?.map((param: { type: string }) => ({
 					...param,
 					type: mapType(param.type)
 				})) || [],
 			headers:
-				endPoint.headers?.map((param: { type: string; }) => ({
+				endPoint.headers?.map((param: { type: string }) => ({
 					...param,
 					type: mapType(param.type)
 				})) || [],
 			formDataParameters:
-				endPoint.formDataParameters?.map((param: { type: string; }) => ({
+				endPoint.formDataParameters?.map((param: { type: string }) => ({
 					...param,
 					type: mapType(param.type)
 				})) || [],
 			response: endPoint.response
 				? {
-					...endPoint.response,
-					type: mapType(endPoint.response.type)
-				}
+						...endPoint.response,
+						type: mapType(endPoint.response.type)
+					}
 				: undefined,
 			statusCodes:
-				endPoint.statusCodes?.map((status: { code: number; }) => ({
+				endPoint.statusCodes?.map((status: { code: number }) => ({
 					...status,
 					code: mapError(status.code)
 				})) || []
 		})
 	),
-	attributes: object.attributes.map((attribute: { type: string; }) => ({
+	attributes: object.attributes.map((attribute: { type: string }) => ({
 		...attribute,
 		type: mapType(attribute.type)
 	}))

@@ -65,14 +65,8 @@
 						"diff": "hard",
 						"text": "{}",
 						"problemStatus": "ok",
-						"courses": [
-							"algorithms"
-						],
-						"categories": [
-							"algorithms",
-							"java",
-							"runtime"
-						],
+						"courses": ["algorithms"],
+						"categories": ["algorithms", "java", "runtime"],
 						"name": "Tim Apple",
 						"email": "whydontyouhaveaseat@gmail.com",
 						"createdAt": "2025-08-14 18:25:39.353362",
