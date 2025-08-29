@@ -1,0 +1,134 @@
+{
+	"title": "The Users object",
+	"endPoints": [
+		{
+			"method": "GET",
+			"route": "api/problems",
+			"description": "Retrieve a list of problems.",
+			"queryParameters": [
+				{
+					"name": "status",
+					"type": "string",
+					"description": "Filter problems by their status (e.g., 'review', 'ok', 'deleted', 'rejected').",
+					"example": "review"
+				},
+				{
+					"name": "difficulty",
+					"type": "string",
+					"description": "Filter problems by their difficulty level (e.g., 'easy', 'medium', 'hard').",
+					"example": "easy"
+				},
+				{
+					"name": "category",
+					"type": "string",
+					"description": "Filter problems by category.",
+					"example": "data structures"
+				},
+				{
+					"name": "createdBy",
+					"type": "string",
+					"description": "Filter problems by the creator's name.",
+					"example": "JohnDoe"
+				},
+				{
+					"name": "sortBy",
+					"type": "string",
+					"description": "Sort problems by a specific attribute (e.g., 'createdAt', 'difficulty').",
+					"example": "createdAt"
+				},
+				{
+					"name": "order",
+					"type": "'asc' | 'desc'",
+					"description": "Order of sorting: ascending ('asc') or descending ('desc').",
+					"example": "asc"
+				},
+				{
+					"name": "limit",
+					"type": "number",
+					"description": "Limit the number of problems returned.",
+					"example": 10
+				},
+				{
+					"name": "offset",
+					"type": "number",
+					"description": "Offset for pagination.",
+					"example": 0
+				}
+			],
+			"statusCodes": [
+				{
+					"code": 200,
+					"description": "Successful retrieval of problems."
+				},
+				{
+					"code": 400,
+					"description": "Bad request due to invalid query parameters."
+				},
+				{
+					"code": 401,
+					"description": "Unauthorized access."
+				},
+				{
+					"code": 403,
+					"description": "Forbidden access."
+				},
+				{
+					"code": 404,
+					"description": "Endpoint not found."
+				},
+				{
+					"code": 500,
+					"description": "Internal server error."
+				}
+			]
+		},
+		{
+			"method": "POST",
+			"route": "api/problems",
+			"description": "Create a new problem."
+		},
+		{
+			"method": "GET",
+			"route": "api/problems/{id}",
+			"description": "Retrieve a specific problem by its ID."
+		},
+		{
+			"method": "PUT",
+			"route": "api/problems/{id}",
+			"description": "Update a specific problem by its ID."
+		},
+		{
+			"method": "DELETE",
+			"route": "api/problems/{id}",
+			"description": "Delete a specific problem by its ID."
+		}
+	],
+	"attributes": [
+		{
+			"name": "id",
+			"type": "string",
+			"description": "The unique identifier for the problem.",
+			"example": "123e4567-e89b-12d3-a456-426614174000"
+		},
+		{
+			"name": "createdBy",
+			"type": "string",
+			"description": "The name of the user who created the problem."
+		},
+		{
+			"name": "problemStatus",
+			"type": "'review' | 'ok' | 'deleted' | 'rejected'",
+			"description": "The current status of the problem."
+		},
+		{
+			"name": "difficulty",
+			"type": "'easy' | 'medium' | 'hard' | 'null'",
+			"description": "The difficulty level of the problem."
+		},
+		{
+			"name": "categories",
+			"type": "string[]",
+			"description": "An array of categories associated with the problem."
+		}
+	]
+}
