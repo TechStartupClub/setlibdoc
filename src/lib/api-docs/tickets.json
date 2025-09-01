@@ -59,7 +59,7 @@
 			"bodyParameters": [
 				{
 					"name": "subject",
-					"subject": "string",
+					"type": "string",
 					"description": "The subject of the ticket.",
 					"example": "Issue with login"
 				},
