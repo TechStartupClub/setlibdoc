@@ -1,93 +1,113 @@
 {
-	"title": "The Users object",
+	"title": "User Object",
 	"endPoints": [
 		{
 			"id": "get-users",
 			"method": "GET",
 			"route": "api/users",
-			"description": "Retrieve a list of users.",
+			"description": "Get a list of all users.",
+			"response": "[{\"publicId\":\"18be3\",\"firstName\":\"facilitator\",\"lastName\":\"one\",\"email\":\"hello@uw.edu\",\"role\":\"facilitator\",\"createdAt\":\"2025-08-12 23:08:47.671755+00\"},{\"publicId\":\"5baee\",\"firstName\":\"tim\",\"lastName\":\"apple\",\"email\":\"test@uw.edu\",\"role\":\"admin\",\"createdAt\":\"2025-08-12 23:08:33.977451+00\"}, ...]",
+			"statusCodes": "TODO"
+		},
+		{
+			"id": "delete-users",
+			"method": "DELETE",
+			"route": "api/users/{email}",
+			"description": "Must be an email of an active user. Will not truly delete the user, just disables them.",
 			"queryParameters": [
 				{
-					"name": "search",
-					"type": "string",
-					"description": "Search users by username or email.",
-					"example": "johndoe"
-				},
-				{
-					"name": "sortBy",
-					"type": "string",
-					"description": "Sort users by a specific attribute (e.g., 'createdAt', 'username').",
-					"example": "createdAt"
-				},
-				{
-					"name": "order",
-					"type": "'asc' | 'desc'",
-					"description": "Order of sorting: ascending ('asc') or descending ('desc').",
-					"example": "asc"
-				},
-				{
-					"name": "limit",
-					"type": "number",
-					"description": "Limit the number of users returned.",
-					"example": 10
-				},
-				{
-					"name": "offset",
-					"type": "number",
-					"description": "Offset for pagination.",
-					"example": 0
+					"name": "email",
+					"type": "string: email format, max len 40, required, must end with @uw.edu",
+					"description": "The email of the user to be deleted.",
+					"example": "api/users/hello@uw.edu"
 				}
 			],
-			"statusCodes": [
+			"response": "Successfully removed example@uw.edu",
+			"statusCodes": "TODO"
+		},
+		{
+			"id": "post-users",
+			"method": "POST",
+			"route": "api/users",
+			"description": "Create new user. Takes in a JSON body",
+			"queryParameters": [
 				{
-					"code": 200,
-					"description": "Successful retrieval of users."
+					"name": "email",
+					"type": "string: email format, max len 40, required, must end with @uw.edu",
+					"description": "The email of the user to be deleted.",
+					"example": "\"email\": \"test@uw.edu\""
 				},
 				{
-					"code": 400,
-					"description": "Bad request. Missing or invalid parameters."
+					"name": "role",
+					"type": "admin | professor | facilitator | student | dev",
+					"description": "role of the user",
+					"example": "\"role\": \"dev\""
 				},
 				{
-					"code": 401,
-					"description": "Unauthorized. Invalid or missing authentication token."
+					"name": "firstName",
+					"type": "string",
+					"description": "First name of the user",
+					"example": "\"firstName\": \"John\""
 				},
 				{
-					"code": 500,
-					"description": "Internal server error."
+					"name": "lastName",
+					"type": "string",
+					"description": "Last name of the user",
+					"example": "\"lastName\": \"Smith\""
 				}
-			]
+			],
+			"response": "Added example@uw.edu to approved users.",
+			"statusCodes": "TODO"
 		}
 	],
 	"attributes": [
 		{
-			"name": "publicId",
-			"type": "string",
-			"description": "A unique public identifier for the user.",
-			"example": "f77de"
+			"name": "firstName",
+			"type": "string: required, max len 25",
+			"description": "The first name of the user.",
+			"example": "John"
 		},
 		{
-			"name": "username",
-			"type": "string",
-			"description": "The user's username.",
-			"example": "johndoe"
-		},
-		{
-			"name": "name",
-			"type": "string",
-			"description": "The user's full name.",
-			"example": "John Doe"
+			"name": "lastName",
+			"type": "string: required, max len 25",
+			"description": "The last name of the user.",
+			"example": "Smith"
 		},
 		{
 			"name": "email",
-			"type": "string",
-			"description": "The user's email address.",
-			"example": ""
+			"type": "string: email format, max len 40, required, must end with @uw.edu",
+			"description": "Email of the user.",
+			"example": "foobarbaz@uw.edu"
+		},
+		{
+			"name": "role",
+			"type": "admin | professor | facilitator | student | dev. This field is required.",
+			"description": "The role of the user. Gives different permissions.",
+			"example": "student"
 		},
 		{
 			"name": "createdAt",
-			"type": "string",
+			"type": "string: must be a date",
 			"description": "The date and time when the user was created.",
 			"example": "2023-10-01T12:34:56Z"
+		},
+		{
+			"name": "isActive",
+			"type": "boolean",
+			"description": "Indicates whether the user is active or inactive.",
+			"example": "true"
+		},
+		{
+			"name": "updated_at",
+			"type": "string: must be a date",
+			"description": "The date and time when the user was last updated.",
+			"example": "2023-10-01T12:34:56Z"
+		},
+		{
+			"name": "publicId",
+			"type": "string",
+			"description": "Public identifier for the user.",
+			"example": "3j4j2"
 		}
 	]
 }
