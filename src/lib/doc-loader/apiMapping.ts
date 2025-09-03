@@ -150,9 +150,9 @@ export const mapApiObject = (object: any): ApiObject => ({
 				})) || [],
 			response: endPoint.response
 				? {
-						...endPoint.response,
-						type: mapType(endPoint.response.type)
-					}
+					...endPoint.response,
+					type: mapType(endPoint.response.type)
+				}
 				: undefined,
 			statusCodes:
 				endPoint.statusCodes?.map((status: { code: number }) => ({
