@@ -113,13 +113,13 @@
 		},
 		{
 			"name": "status",
-			"type": "'open' | 'closed'",
+			"type": "enum",
 			"description": "Indicates whether the ticket is open or closed.",
 			"example": "open"
 		},
 		{
 			"name": "createdAt",
-			"type": "string (ISO 8601 date)",
+			"type": "string",
 			"description": "The date and time when the ticket was created.",
 			"example": "2023-10-01T12:34:56Z"
 		}

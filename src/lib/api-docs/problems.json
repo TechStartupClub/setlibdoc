@@ -9,13 +9,13 @@
 			"queryParameters": [
 				{
 					"name": "status",
-					"type": "string",
+					"type": "enum",
 					"description": "Filter problems by their status (e.g., 'review', 'ok', 'deleted', 'rejected').",
 					"example": "review"
 				},
 				{
 					"name": "difficulty",
-					"type": "string",
+					"type": "enum",
 					"description": "Filter problems by their difficulty level (e.g., 'easy', 'medium', 'hard').",
 					"example": "easy"
 				},
@@ -39,7 +39,7 @@
 				},
 				{
 					"name": "order",
-					"type": "'asc' | 'desc'",
+					"type": "enum",
 					"description": "Order of sorting: ascending ('asc') or descending ('desc').",
 					"example": "asc"
 				},
@@ -132,12 +132,12 @@
 		},
 		{
 			"name": "problemStatus",
-			"type": "'review' | 'ok' | 'deleted' | 'rejected'",
+			"type": "enum",
 			"description": "The current status of the problem. Possible values are 'review', 'ok', 'deleted', and 'rejected'."
 		},
 		{
 			"name": "difficulty",
-			"type": "'easy' | 'medium' | 'hard' | 'null'",
+			"type": "enum",
 			"description": "The difficulty level of the problem. Possible values are 'easy', 'medium', 'hard', and 'null'."
 		},
 		{

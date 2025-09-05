@@ -6,8 +6,85 @@
 			"method": "GET",
 			"route": "api/users",
 			"description": "Get a list of all users.",
-			"response": "[{\"publicId\":\"18be3\",\"firstName\":\"facilitator\",\"lastName\":\"one\",\"email\":\"hello@uw.edu\",\"role\":\"facilitator\",\"createdAt\":\"2025-08-12 23:08:47.671755+00\"},{\"publicId\":\"5baee\",\"firstName\":\"tim\",\"lastName\":\"apple\",\"email\":\"test@uw.edu\",\"role\":\"admin\",\"createdAt\":\"2025-08-12 23:08:33.977451+00\"}, ...]",
-			"statusCodes": "TODO"
+			"response": {
+				"type": "object[]",
+				"description": "An array of user objects.",
+				"example": [
+					{
+						"publicId": "18be3",
+						"firstName": "facilitator",
+						"lastName": "one",
+						"email": "hello@uw.edu",
+						"role": "facilitator",
+						"createdAt": "2025-08-12 23:08:47.671755+00"
+					},
+					{
+						"publicId": "5baee",
+						"firstName": "tim",
+						"lastName": "apple",
+						"email": "test@uw.edu",
+						"role": "admin",
+						"createdAt": "2025-08-12 23:08:33.977451+00"
+					}
+				]
+			}
+		},
+		{
+			"id": "post-users",
+			"method": "POST",
+			"route": "api/users",
+			"description": "Create new user. Takes in a JSON body",
+			"queryParameters": [
+				{
+					"name": "email",
+					"type": "string: email format, max len 40, required, must end with @uw.edu",
+					"description": "The email of the user to be deleted.",
+					"example": {
+						"type": "string",
+						"description": "The email address of the new user.",
+						"example": "test@uw.edu"
+					}
+				},
+				{
+					"name": "role",
+					"type": "enum",
+					"description": "role of the user (admin | professor | facilitator | student | dev)",
+					"example": {
+						"type": "string",
+						"description": "The role of the user. Must be one of the following: admin, professor, facilitator, student, dev.",
+						"example": "dev"
+					}
+				},
+				{
+					"name": "firstName",
+					"type": "string",
+					"description": "First name of the user",
+					"example": {
+						"type": "string",
+						"description": "The first name of the user. Maximum length is 25 characters.",
+						"example": "John"
+					}
+				},
+				{
+					"name": "lastName",
+					"type": "string",
+					"description": "Last name of the user",
+					"example": {
+						"type": "string",
+						"description": "The last name of the user. Maximum length is 25 characters.",
+						"example": "Smith"
+					}
+				}
+			],
+			"response": {
+				"type": "string",
+				"description": "A message indicating the result of the user creation operation.",
+				"example": {
+					"type": "string",
+					"description": "A message indicating the result of the user creation operation.",
+					"example": "Added example@uw.edu to approved users."
+				}
+			}
 		},
 		{
 			"id": "delete-users",
@@ -22,55 +99,24 @@
 					"example": "api/users/hello@uw.edu"
 				}
 			],
-			"response": "Successfully removed example@uw.edu",
-			"statusCodes": "TODO"
-		},
-		{
-			"id": "post-users",
-			"method": "POST",
-			"route": "api/users",
-			"description": "Create new user. Takes in a JSON body",
-			"queryParameters": [
-				{
-					"name": "email",
-					"type": "string: email format, max len 40, required, must end with @uw.edu",
-					"description": "The email of the user to be deleted.",
-					"example": "\"email\": \"test@uw.edu\""
-				},
-				{
-					"name": "role",
-					"type": "admin | professor | facilitator | student | dev",
-					"description": "role of the user",
-					"example": "\"role\": \"dev\""
-				},
-				{
-					"name": "firstName",
-					"type": "string",
-					"description": "First name of the user",
-					"example": "\"firstName\": \"John\""
-				},
-				{
-					"name": "lastName",
-					"type": "string",
-					"description": "Last name of the user",
-					"example": "\"lastName\": \"Smith\""
-				}
-			],
-			"response": "Added example@uw.edu to approved users.",
-			"statusCodes": "TODO"
+			"response": {
+				"type": "string",
+				"description": "A message indicating the result of the deletion operation.",
+				"example": "Successfully removed example@uw.edu"
+			}
 		}
 	],
 	"attributes": [
 		{
 			"name": "firstName",
-			"type": "string: required, max len 25",
-			"description": "The first name of the user.",
+			"type": "string",
+			"description": "The first name of the user. : required, max len 25",
 			"example": "John"
 		},
 		{
 			"name": "lastName",
-			"type": "string: required, max len 25",
-			"description": "The last name of the user.",
+			"type": "string",
+			"description": "The last name of the user. : required, max len 25",
 			"example": "Smith"
 		},
 		{
@@ -81,13 +127,13 @@
 		},
 		{
 			"name": "role",
-			"type": "admin | professor | facilitator | student | dev. This field is required.",
-			"description": "The role of the user. Gives different permissions.",
+			"type": "enum",
+			"description": "The role of the user. Gives different permissions. Enum of admin | professor | facilitator | student | dev. This field is required.",
 			"example": "student"
 		},
 		{
 			"name": "createdAt",
-			"type": "string: must be a date",
+			"type": "string",
 			"description": "The date and time when the user was created.",
 			"example": "2023-10-01T12:34:56Z"
 		},
@@ -99,7 +145,7 @@
 		},
 		{
 			"name": "updated_at",
-			"type": "string: must be a date",
+			"type": "string",
 			"description": "The date and time when the user was last updated.",
 			"example": "2023-10-01T12:34:56Z"
 		},

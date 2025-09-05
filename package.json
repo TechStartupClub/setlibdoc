@@ -4,8 +4,8 @@
 	"version": "0.0.1",
 	"type": "module",
 	"scripts": {
-		"dev": "npm test && vite dev",
-		"build": "npm test && vite build",
+		"dev": "vite dev",
+		"build": "vite build",
 		"preview": "vite preview",
 		"prepare": "svelte-kit sync || echo ''",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
@@ -39,6 +39,7 @@
 		"vite": "^7.0.4"
 	},
 	"dependencies": {
-		"@sveltejs/adapter-static": "^3.0.9"
+		"@sveltejs/adapter-static": "^3.0.9",
+		"zod": "^4.1.5"
 	}
 }
