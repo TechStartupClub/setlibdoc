@@ -79,11 +79,7 @@
 			"response": {
 				"type": "string",
 				"description": "A message indicating the result of the user creation operation.",
-				"example": {
-					"type": "string",
-					"description": "A message indicating the result of the user creation operation.",
-					"example": "Added example@uw.edu to approved users."
-				}
+				"example": "Successfully created user with email"
 			}
 		},
 		{
