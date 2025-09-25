@@ -1,0 +1,960 @@
+openapi: 3.0.3
+info:
+  title: SetLib API
+  description: API documentation for the SetLib application
+  version: 1.0.0
+  # contact:
+  #   name: API Support
+  #   email: support@setlib.com
+
+servers:
+  - url: http://localhost:4000/api
+    description: Development server
+  # - url: https:api.setlib.com
+  #   description: Production server
+
+security:
+  - bearerAuth: []
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  schemas:
+    Problem:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Problem ID
+          example: 928
+        text:
+          type: string
+          description: Text of the problem (in LaTeX format)
+          example: "What is 5 + 5?"
+        created_at:
+          type: string
+          format: date-time
+          description: Time when problem was created
+          example: "2025-09-03T05:52:09.434361Z"
+        updated_at:
+          type: string
+          format: date-time
+          description: Time when problem was last updated
+          example: "2025-09-03T05:52:09.434361Z"
+        author:
+          type: string
+          format: email
+          pattern: '^[^@]+@uw\.edu$'
+          description: Creator's email (must be UW email)
+          example: "student@uw.edu"
+        solution:
+          type: string
+          description: Solution to the problem (in LaTeX format, may be empty)
+          example: "10"
+        course:
+          type: string
+          enum: [TCSS142, TCSS143, TCSS305, TCSS321, TCSS342, TCSS343, not_set]
+          description: Course of the problem
+          example: "TCSS321"
+        difficulty:
+          type: string
+          enum: [easy, medium, hard, not_set]
+          description: Difficulty of the problem
+          example: "not_set"
+        status:
+          type: string
+          enum: [review, ok, deleted, rejected]
+          description: Status of the problem
+          example: "review"
+      required:
+        - id
+        - text
+        - created_at
+        - updated_at
+        - author
+        - course
+        - difficulty
+        - status
+
+    CreateProblemRequest:
+      type: object
+      properties:
+        text:
+          type: string
+          description: Text of the problem (in LaTeX format)
+          example: "This is a test problem."
+        author:
+          type: string
+          format: email
+          pattern: '^[^@]+@uw\.edu$'
+          description: Email of the author (must be valid UW email)
+          example: "student@uw.edu"
+        solution:
+          type: string
+          description: Solution of the problem (in LaTeX format)
+          example: "solution to test"
+        course:
+          type: string
+          enum: [TCSS142, TCSS143, TCSS305, TCSS321, TCSS342, TCSS343, not_set]
+          description: Course of the problem
+          example: "TCSS142"
+        difficulty:
+          type: string
+          enum: [easy, medium, hard, not_set]
+          description: Difficulty of the problem
+          example: "easy"
+        status:
+          type: string
+          enum: [review, ok, deleted, rejected]
+          description: Status of the problem
+          example: "review"
+      required:
+        - text
+        - author
+        - course
+        - difficulty
+        - status
+
+    UpdateProblemRequest:
+      type: object
+      properties:
+        text:
+          type: string
+          description: Text of the problem (in LaTeX format)
+          example: "This is a test problem."
+        solution:
+          type: string
+          description: Solution of the problem (in LaTeX format)
+          example: "solution to test"
+        course:
+          type: string
+          enum: [TCSS142, TCSS143, TCSS305, TCSS321, TCSS342, TCSS343, not_set]
+          description: Course of the problem
+          example: "TCSS142"
+        difficulty:
+          type: string
+          enum: [easy, medium, hard, not_set]
+          description: Difficulty of the problem
+          example: "easy"
+        status:
+          type: string
+          enum: [review, ok, deleted, rejected]
+          description: Status of the problem
+          example: "rejected"
+
+    CreateProblemResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: ID of the created problem
+          example: 936
+        message:
+          type: string
+          description: Success message
+          example: "Problem Created"
+      required:
+        - id
+        - message
+
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+          description: Error message
+        code:
+          type: integer
+          description: Error code
+      required:
+        - error
+
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: User ID
+        email:
+          type: string
+          format: email
+          description: User email address
+        name:
+          type: string
+          description: User full name
+        created_at:
+          type: string
+          format: date-time
+          description: User creation timestamp
+        updated_at:
+          type: string
+          format: date-time
+          description: User last update timestamp
+      required:
+        - id
+        - email
+        - name
+
+    Ticket:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Ticket ID
+        title:
+          type: string
+          description: Ticket title
+        description:
+          type: string
+          description: Ticket description
+        status:
+          type: string
+          enum: [open, in_progress, resolved, closed]
+          description: Ticket status
+        priority:
+          type: string
+          enum: [low, medium, high, critical]
+          description: Ticket priority
+        assigned_to:
+          type: integer
+          description: ID of assigned user
+        created_by:
+          type: integer
+          description: ID of user who created the ticket
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+      required:
+        - id
+        - title
+        - status
+        - created_by
+
+    LoginRequest:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+          pattern: '^[^@]+@uw\.edu$'
+          description: University of Washington email address
+          example: "student@uw.edu"
+        password:
+          type: string
+          description: User password
+      required:
+        - email
+        - password
+
+    LoginResponse:
+      type: object
+      properties:
+        user:
+          $ref: "#/components/schemas/User"
+        token:
+          type: string
+          description: JWT access token
+        expires_at:
+          type: string
+          format: date-time
+          description: Token expiration time
+      required:
+        - token
+        - user
+
+    RegisterRequest:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+          description: User email
+        name:
+          type: string
+          description: User full name
+        password:
+          type: string
+          description: User password
+        token:
+          type: string
+          description: Magic link token from invitation
+      required:
+        - email
+        - name
+        - password
+        - token
+
+    InvitationRequest:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+          pattern: '^[^@]+@uw\.edu$'
+          description: University of Washington email address
+          example: "student@uw.edu"
+        firstName:
+          type: string
+        lastName:
+          type: string
+        role:
+          type: string
+          enum: [admin, professor, facilitator, student, dev]
+          description: Role to assign to the invited user
+      required:
+        - email
+        - firstName
+        - lastName
+        - role
+
+    HealthResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          enum: [healthy, degraded, unhealthy]
+          description: Overall system health status
+        timestamp:
+          type: string
+          format: date-time
+          description: Health check timestamp
+        services:
+          type: object
+          properties:
+            database:
+              type: string
+              enum: [healthy, unhealthy]
+            cache:
+              type: string
+              enum: [healthy, unhealthy]
+        version:
+          type: string
+          description: API version
+      required:
+        - status
+        - timestamp
+
+paths:
+  # Authentication Endpoints
+  /auth/login:
+    post:
+      tags:
+        - Authentication
+      summary: User login
+      description: Authenticate user and return JWT token
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LoginRequest"
+      responses:
+        "200":
+          description: Login successful
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LoginResponse"
+        "400":
+          description: Invalid request body
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "401":
+          description: Invalid credentials
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /auth/register:
+    post:
+      tags:
+        - Authentication
+      summary: Complete user registration
+      description: Complete user registration process after clicking magic link
+      # security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RegisterRequest"
+      responses:
+        "201":
+          description: Registration successful
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LoginResponse"
+        "400":
+          description: Invalid request body or token
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /auth/invitations:
+    post:
+      tags:
+        - Authentication
+      summary: Send registration invitation
+      description: Send a magic link invitation to a new user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InvitationRequest'
+      responses:
+        '200':
+          description: Invitation sent successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Invitation sent successfully"
+        '400':
+          description: Invalid request body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /problems:
+    get:
+      tags:
+        - Problems
+      summary: Get all problems
+      description: Retrieve all non-deleted problems by filters. None of the filters are required.
+      parameters:
+        - name: id
+          in: query
+          description: Problem id (must be associated with active problem in db)
+          required: false
+          schema:
+            type: integer
+            example: 10
+        - name: course
+          in: query
+          description: Course of the problem
+          required: false
+          schema:
+            type: string
+            enum:
+              [TCSS142, TCSS143, TCSS305, TCSS321, TCSS342, TCSS343, not_set]
+            example: "TCSS321"
+        - name: difficulty
+          in: query
+          description: Difficulty of the problem
+          required: false
+          schema:
+            type: string
+            enum: [easy, medium, hard, not_set]
+            example: "easy"
+        - name: status
+          in: query
+          description: Status of the problem
+          required: false
+          schema:
+            type: string
+            enum: [review, ok, deleted, rejected]
+            example: "ok"
+        - name: author
+          in: query
+          description: Email of the problem author
+          required: false
+          schema:
+            type: string
+            format: email
+            pattern: '^[A-Za-z0-9._%+-]{1,33}@uw\.edu$'
+            example: "student@uw.edu"
+        - name: sort_by
+          in: query
+          description: Field to sort problems by
+          required: false
+          schema:
+            type: string
+            enum:
+              [id, created_at, updated_at, author, course, difficulty, status]
+            example: "created_at"
+        - name: order
+          in: query
+          description: Sort order (only usable when sort_by is used)
+          required: false
+          schema:
+            type: string
+            enum: [asc, desc]
+            example: "desc"
+        - name: limit
+          in: query
+          description: Maximum number of problems returned (must be greater than 0)
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            example: 10
+        - name: offset
+          in: query
+          description: Offset of the query (must be greater than 0)
+          required: false
+          schema:
+            type: integer
+            minimum: 0
+            example: 0
+      responses:
+        "200":
+          description: List of problems
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Problem"
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+    post:
+      tags:
+        - Problems
+      summary: Create a new problem
+      description: Create a new problem entry
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateProblemRequest"
+      responses:
+        "201":
+          description: Problem created successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CreateProblemResponse"
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /problems/{id}:
+    delete:
+      tags:
+        - Problems
+      summary: Delete a problem
+      description: Delete a problem by id
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Problem ID
+          schema:
+            type: integer
+            example: 928
+      responses:
+        "200":
+          description: Problem deleted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Successfully Deleted User"
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+    patch:
+      tags:
+        - Problems
+      summary: Update a problem
+      description: Update a problem by id. All fields in the request body are optional.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Problem ID
+          schema:
+            type: integer
+            example: 928
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateProblemRequest"
+      responses:
+        "200":
+          description: Problem updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Problem updated successfully"
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  # System Endpoints
+  /health:
+    get:
+      tags:
+        - System
+      summary: Health check
+      description: Check the health status of the API and its dependencies
+      security: []
+      responses:
+        "200":
+          description: System is healthy
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HealthResponse"
+        "503":
+          description: System is unhealthy
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HealthResponse"
+
+  # Tickets Endpoints
+  /tickets:
+    get:
+      tags:
+        - Tickets
+      summary: Get all tickets
+      description: Retrieve a list of all tickets
+      parameters:
+        - name: status
+          in: query
+          description: Filter by ticket status
+          required: false
+          schema:
+            type: string
+            enum: [open, in_progress, resolved, closed]
+        - name: priority
+          in: query
+          description: Filter by ticket priority
+          required: false
+          schema:
+            type: string
+            enum: [low, medium, high, critical]
+        - name: limit
+          in: query
+          description: Maximum number of tickets to return
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 20
+        - name: offset
+          in: query
+          description: Number of tickets to skip
+          required: false
+          schema:
+            type: integer
+            minimum: 0
+            default: 0
+      responses:
+        "200":
+          description: List of tickets
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  tickets:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Ticket"
+                  total:
+                    type: integer
+                    description: Total number of tickets
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+    post:
+      tags:
+        - Tickets
+      summary: Create a new ticket
+      description: Create a new ticket entry
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  description: Ticket title
+                description:
+                  type: string
+                  description: Ticket description
+                priority:
+                  type: string
+                  enum: [low, medium, high, critical]
+                  description: Ticket priority
+                assigned_to:
+                  type: integer
+                  description: ID of user to assign the ticket to
+              required:
+                - title
+                - priority
+      responses:
+        "201":
+          description: Ticket created successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Ticket"
+        "400":
+          description: Invalid request body
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /tickets/{id}:
+    delete:
+      tags:
+        - Tickets
+      summary: Delete a ticket
+      description: Delete an existing ticket
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Ticket ID
+          schema:
+            type: integer
+      responses:
+        "204":
+          description: Ticket deleted successfully
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "404":
+          description: Ticket not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  # Users Endpoints
+  /users:
+    get:
+      tags:
+        - Users
+      summary: Get all users
+      description: Retrieve a list of all users
+      parameters:
+        - name: limit
+          in: query
+          description: Maximum number of users to return
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 20
+        - name: offset
+          in: query
+          description: Number of users to skip
+          required: false
+          schema:
+            type: integer
+            minimum: 0
+            default: 0
+      responses:
+        "200":
+          description: List of users
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  users:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/User"
+                  total:
+                    type: integer
+                    description: Total number of users
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+    post:
+      tags:
+        - Users
+      summary: Create a new user
+      description: Create a new user (admin only)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  format: email
+                  description: User email
+                name:
+                  type: string
+                  description: User full name
+                password:
+                  type: string
+                  description: User password
+                role:
+                  type: string
+                  enum: [admin, user]
+                  description: User role
+              required:
+                - email
+                - name
+                - password
+      responses:
+        "201":
+          description: User created successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+        "400":
+          description: Invalid request body
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "409":
+          description: User already exists
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /users/{email}:
+    delete:
+      tags:
+        - Users
+      summary: Delete a user
+      description: Delete an existing user by email
+      parameters:
+        - name: email
+          in: path
+          required: true
+          description: User email address
+          schema:
+            type: string
+            format: email
+      responses:
+        "204":
+          description: User deleted successfully
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "404":
+          description: User not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+tags:
+  - name: Authentication
+    description: User authentication and registration
+  - name: Problems
+    description: Problem management
+  - name: System
+    description: System health and monitoring
+  - name: Tickets
+    description: Ticket management
+  - name: Users
+    description: User management
