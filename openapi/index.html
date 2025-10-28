@@ -36,8 +36,7 @@
           SwaggerUIBundle.plugins.DownloadUrl
         ],
         layout: "StandaloneLayout",
-        tryItOutEnabled: true,
-        supportedSubmitMethods: [],
+        supportedSubmitMethods: ["GET", "POST", "PATCH"],
         onComplete: function() {
           console.log("Swagger UI loaded");
         }
