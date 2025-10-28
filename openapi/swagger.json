@@ -9,6 +9,10 @@
     {
       "url": "http://localhost:4000",
       "description": "Local development server"
+    },
+    {
+      "url": "https://setlib.onrender.com",
+      "description": "Remote production server"
     }
   ],
   "paths": {
