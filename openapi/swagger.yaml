@@ -1,0 +1,647 @@
+openapi: 3.0.0
+info:
+  title: TypeSheet API
+  version: '1.0'
+  description: API Server for TypeSheet application.
+servers:
+  - url: http://localhost:4000/api
+    description: Local Development Server
+  - url: https://setlib.onrender.com/api
+    description: Production Server
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+  schemas:
+    Login:
+      type: object
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+    Register:
+      type: object
+      properties:
+        firstName:
+          type: string
+        lastName:
+          type: string
+        password:
+          type: string
+    Invite:
+      type: object
+      properties:
+        email:
+          type: string
+        firstName:
+          type: string
+        lastName:
+          type: string
+        role:
+          type: string
+    TokenRes:
+      type: object
+      properties:
+        token_type:
+          type: string
+        access_token:
+          type: string
+        expires_in:
+          type: integer
+    User:
+      type: object
+      properties:
+        publicId:
+          type: string
+        email:
+          type: string
+        firstName:
+          type: string
+        lastName:
+          type: string
+        role:
+          type: string
+        status:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+    PaginatedAPIResponse:
+      type: object
+      properties:
+        users:
+          type: array
+          items:
+            $ref: '#/components/schemas/User'
+        pageMetaData:
+          type: object
+    Ticket:
+      type: object
+      properties:
+        user:
+          type: string
+        subject:
+          type: string
+        isOpen:
+          type: boolean
+        createdAt:
+          type: string
+          format: date-time
+        message:
+          type: string
+    UpdateTicket:
+      type: object
+      properties:
+        subject:
+          type: string
+        message:
+          type: string
+    HealthReport:
+      type: object
+      properties:
+        databaseUp:
+          type: boolean
+        timestamp:
+          type: string
+    GetProblems:
+      type: object
+      properties:
+        id:
+          type: integer
+        text:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+        author:
+          type: string
+        solution:
+          type: string
+        course:
+          type: string
+        difficulty:
+          type: string
+        status:
+          type: string
+        topics:
+          type: array
+          items:
+            type: string
+    GetProblem:
+      type: object
+      properties:
+        text:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+        author:
+          type: string
+        solution:
+          type: string
+        course:
+          type: string
+        difficulty:
+          type: string
+        status:
+          type: string
+        topics:
+          type: array
+          items:
+            type: string
+    PostProblem:
+      type: object
+      properties:
+        text:
+          type: string
+        author:
+          type: string
+        solution:
+          type: string
+        course:
+          type: string
+        difficulty:
+          type: string
+        status:
+          type: string
+        topics:
+          type: array
+          items:
+            type: string
+    PatchProblem:
+      type: object
+      properties:
+        text:
+          type: string
+        solution:
+          type: string
+        course:
+          type: string
+        difficulty:
+          type: string
+        status:
+          type: string
+        topics:
+          type: array
+          items:
+            type: string
+    GetWorkspaces:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+    GetWorkspace:
+      type: object
+      properties:
+        name:
+          type: string
+    PostWorkspace:
+      type: object
+      properties:
+        name:
+          type: string
+    EditWorkspace:
+      type: object
+      properties:
+        name:
+          type: string
+    PostModule:
+      type: object
+      properties:
+        parent:
+          type: integer
+        name:
+          type: string
+paths:
+  /auth/login:
+    post:
+      tags:
+        - auth
+      summary: User Login
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Login'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenRes'
+  /auth/register/{token}:
+    post:
+      tags:
+        - auth
+      summary: User Registration
+      parameters:
+        - in: path
+          name: token
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Register'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenRes'
+  /auth/invitations:
+    post:
+      tags:
+        - auth
+      summary: Send Invitation
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Invite'
+      responses:
+        '201':
+          description: Created
+  /users:
+    get:
+      tags:
+        - users
+      summary: Get All Users
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+        - in: query
+          name: page_size
+          schema:
+            type: integer
+        - in: query
+          name: sort
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedAPIResponse'
+    post:
+      tags:
+        - users
+      summary: Create User
+      security:
+        - BearerAuth: []
+      responses:
+        '501':
+          description: Not Implemented
+  /users/{email}:
+    delete:
+      tags:
+        - users
+      summary: Delete User
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: path
+          name: email
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+  /tickets/{id}:
+    get:
+      tags:
+        - tickets
+      summary: Get Ticket
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Ticket'
+    delete:
+      tags:
+        - tickets
+      summary: Delete Ticket
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: OK
+    patch:
+      tags:
+        - tickets
+      summary: Update Ticket
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateTicket'
+      responses:
+        '200':
+          description: OK
+  /tickets/close/{id}:
+    patch:
+      tags:
+        - tickets
+      summary: Close Ticket
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: OK
+  /system/health:
+    get:
+      tags:
+        - system
+      summary: Health Check
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HealthReport'
+        '503':
+          description: Service Unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HealthReport'
+  /problems:
+    get:
+      tags:
+        - problems
+      summary: Get Problems
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+        - in: query
+          name: page_size
+          schema:
+            type: integer
+        - in: query
+          name: sort
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GetProblems'
+    post:
+      tags:
+        - problems
+      summary: Create Problem
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PostProblem'
+      responses:
+        '201':
+          description: Created
+  /problems/{id}:
+    get:
+      tags:
+        - problems
+      summary: Get Problem
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetProblem'
+    delete:
+      tags:
+        - problems
+      summary: Delete Problem
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: OK
+    patch:
+      tags:
+        - problems
+      summary: Patch Problem
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchProblem'
+      responses:
+        '200':
+          description: OK
+  /problems/topics:
+    get:
+      tags:
+        - problems
+      summary: Get Topics
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+  /workspaces:
+    get:
+      tags:
+        - workspaces
+      summary: Get Workspaces
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GetWorkspaces'
+    post:
+      tags:
+        - workspaces
+      summary: Create Workspace
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PostWorkspace'
+      responses:
+        '201':
+          description: Created
+  /workspaces/{id}:
+    get:
+      tags:
+        - workspaces
+      summary: Get Workspace
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetWorkspace'
+    delete:
+      tags:
+        - workspaces
+      summary: Delete Workspace
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: OK
+    patch:
+      tags:
+        - workspaces
+      summary: Edit Workspace
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EditWorkspace'
+      responses:
+        '200':
+          description: OK
+  /modules:
+    post:
+      tags:
+        - workspaces
+      summary: Create Module
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PostModule'
+      responses:
+        '201':
+          description: Created
