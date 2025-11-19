@@ -1,1056 +1,1078 @@
 {
-  "openapi": "3.0.3",
-  "info": {
-    "title": "SetLib",
-    "description": "SetLib API for managing UW student facilitators",
-    "version": "1.0.0"
-  },
-  "servers": [
-    {
-      "url": "http://localhost:4000",
-      "description": "Local development server"
+    "openapi": "3.0.0",
+    "info": {
+        "title": "TypeSheet API",
+        "version": "1.0",
+        "description": "API Server for TypeSheet application."
     },
-    {
-      "url": "https://setlib.onrender.com",
-      "description": "Remote production server"
-    }
-  ],
-  "paths": {
-    "/api/auth/login": {
-      "post": {
-        "tags": [
-          "Authentication"
-        ],
-        "summary": "User login",
-        "description": "Authenticates a user and returns an access token and refresh token.",
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
+    "servers": [
+        {
+            "url": "http://localhost:4000/api",
+            "description": "Local Development Server"
+        },
+        {
+            "url": "https://setlib.onrender.com/api",
+            "description": "Production Server"
+        }
+    ],
+    "components": {
+        "securitySchemes": {
+            "BearerAuth": {
+                "type": "http",
+                "scheme": "bearer"
+            }
+        },
+        "schemas": {
+            "Login": {
                 "type": "object",
                 "properties": {
-                  "email": {
-                    "type": "string",
-                    "format": "email",
-                    "example": "user@uw.edu",
-                    "description": "User's email address."
-                  },
-                  "password": {
-                    "type": "string",
-                    "format": "password",
-                    "example": "password123",
-                    "description": "User's password."
-                  }
-                },
-                "required": [
-                  "email",
-                  "password"
-                ]
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Successful login",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "access_token": {
-                      "type": "string",
-                      "description": "Access token for the user."
+                    "email": {
+                        "type": "string"
                     },
-                    "token_type": {
-                      "type": "string",
-                      "example": "bearer",
-                      "description": "Type of the token."
-                    },
-                    "expires_in": {
-                      "type": "string",
-                      "description": "Expiration time of the access token."
+                    "password": {
+                        "type": "string"
                     }
-                  }
                 }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid request body",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/auth/register/{token}": {
-      "post": {
-        "tags": [
-          "Authentication"
-        ],
-        "summary": "Complete user registration",
-        "description": "Completes the registration process for a user using a registration token.",
-        "parameters": [
-          {
-            "name": "token",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
             },
-            "description": "Registration token sent to the user's email."
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
+            "Register": {
                 "type": "object",
                 "properties": {
-                  "firstName": {
-                    "type": "string",
-                    "example": "John",
-                    "description": "User's first name."
-                  },
-                  "lastName": {
-                    "type": "string",
-                    "example": "Doe",
-                    "description": "User's last name."
-                  },
-                  "password": {
-                    "type": "string",
-                    "format": "password",
-                    "example": "password123",
-                    "description": "User's password."
-                  }
-                },
-                "required": [
-                  "firstName",
-                  "lastName",
-                  "password"
-                ]
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Successful registration",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "access_token": {
-                      "type": "string",
-                      "description": "Access token for the user."
+                    "firstName": {
+                        "type": "string"
                     },
+                    "lastName": {
+                        "type": "string"
+                    },
+                    "password": {
+                        "type": "string"
+                    }
+                }
+            },
+            "Invite": {
+                "type": "object",
+                "properties": {
+                    "email": {
+                        "type": "string"
+                    },
+                    "firstName": {
+                        "type": "string"
+                    },
+                    "lastName": {
+                        "type": "string"
+                    },
+                    "role": {
+                        "type": "string"
+                    }
+                }
+            },
+            "TokenRes": {
+                "type": "object",
+                "properties": {
                     "token_type": {
-                      "type": "string",
-                      "example": "bearer",
-                      "description": "Type of the token."
+                        "type": "string"
+                    },
+                    "access_token": {
+                        "type": "string"
                     },
                     "expires_in": {
-                      "type": "string",
-                      "description": "Expiration time of the access token."
+                        "type": "integer"
                     }
-                  }
                 }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid request body or missing token",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "410": {
-            "description": "Expired registration token",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/auth/invitations": {
-      "post": {
-        "tags": [
-          "Authentication"
-        ],
-        "summary": "Send registration invitation",
-        "description": "Sends an invitation email to a user with a registration link.",
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
+            },
+            "User": {
                 "type": "object",
                 "properties": {
-                  "email": {
-                    "type": "string",
-                    "format": "email",
-                    "example": "user@uw.edu",
-                    "description": "Email address of the user to invite."
-                  },
-                  "firstName": {
-                    "type": "string",
-                    "example": "John",
-                    "description": "First name of the user."
-                  },
-                  "lastName": {
-                    "type": "string",
-                    "example": "Doe",
-                    "description": "Last name of the user."
-                  },
-                  "role": {
-                    "type": "string",
-                    "example": "student",
-                    "description": "Role of the user (e.g., admin, professor, student, dev)."
-                  }
-                },
-                "required": [
-                  "email",
-                  "firstName",
-                  "lastName",
-                  "role"
-                ]
-              }
-            }
-          }
-        },
-        "responses": {
-          "201": {
-            "description": "Invitation sent successfully",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string",
-                      "example": "Invitation sent"
+                    "publicId": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string"
+                    },
+                    "firstName": {
+                        "type": "string"
+                    },
+                    "lastName": {
+                        "type": "string"
+                    },
+                    "role": {
+                        "type": "string"
+                    },
+                    "status": {
+                        "type": "string"
+                    },
+                    "createdAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updatedAt": {
+                        "type": "string",
+                        "format": "date-time"
                     }
-                  }
                 }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid request body",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
+            },
+            "PaginatedAPIResponse": {
+                "type": "object",
+                "properties": {
+                    "users": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/User"
+                        }
+                    },
+                    "pageMetaData": {
+                        "type": "object"
+                    }
                 }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal server error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
+            },
+            "Ticket": {
+                "type": "object",
+                "properties": {
+                    "user": {
+                        "type": "string"
+                    },
+                    "subject": {
+                        "type": "string"
+                    },
+                    "isOpen": {
+                        "type": "boolean"
+                    },
+                    "createdAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "message": {
+                        "type": "string"
+                    }
                 }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/problems": {
-      "get": {
-        "tags": [
-          "Problems"
-        ],
-        "summary": "Get all problems with filters",
-        "description": "Retrieve all non-deleted problems by the filters. None of the filters are required. If no filters are given, all valid problems will be returned.",
-        "parameters": [
-          {
-            "name": "course",
-            "in": "query",
-            "description": "Course of the problem",
-            "schema": {
-              "$ref": "#/components/schemas/Course"
-            }
-          },
-          {
-            "name": "difficulty",
-            "in": "query",
-            "description": "Difficulty of the problem",
-            "schema": {
-              "$ref": "#/components/schemas/Difficulty"
-            }
-          },
-          {
-            "name": "status",
-            "in": "query",
-            "description": "Status of the problem",
-            "schema": {
-              "$ref": "#/components/schemas/Status"
-            }
-          },
-          {
-            "name": "author",
-            "in": "query",
-            "description": "Email of the author to filter by",
-            "schema": {
-              "type": "string",
-              "example": "matchew@uw.edu"
-            }
-          },
-          {
-            "name": "sort_by",
-            "in": "query",
-            "description": "Field to sort by",
-            "schema": {
-              "type": "string",
-              "enum": [
-                "id",
-                "created_at",
-                "updated_at",
-                "author",
-                "course",
-                "difficulty",
-                "status"
-              ]
-            }
-          },
-          {
-            "name": "order",
-            "in": "query",
-            "description": "Sort order (only used when sort_by is specified)",
-            "schema": {
-              "type": "string",
-              "enum": [
-                "asc",
-                "desc"
-              ]
-            }
-          },
-          {
-            "name": "limit",
-            "in": "query",
-            "description": "Max number of problems returned; must be greater than 0",
-            "schema": {
-              "type": "integer",
-              "minimum": 1,
-              "example": 10
-            }
-          },
-          {
-            "name": "offset",
-            "in": "query",
-            "description": "Offset of the query; must be greater than 0",
-            "schema": {
-              "type": "integer",
-              "minimum": 0,
-              "example": 0
-            }
-          },
-          {
-            "name": "topics",
-            "in": "query",
-            "description": "Comma-separated list of topics that the problem must have",
-            "schema": {
-              "type": "string",
-              "example": "Arrays,Recursion"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/ProblemWithId"
-                  }
+            },
+            "UpdateTicket": {
+                "type": "object",
+                "properties": {
+                    "subject": {
+                        "type": "string"
+                    },
+                    "message": {
+                        "type": "string"
+                    }
                 }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
+            },
+            "HealthReport": {
+                "type": "object",
+                "properties": {
+                    "databaseUp": {
+                        "type": "boolean"
+                    },
+                    "timestamp": {
+                        "type": "string"
+                    }
                 }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          }
-        }
-      },
-      "post": {
-        "tags": [
-          "Problems"
-        ],
-        "summary": "Create a new problem",
-        "description": "Create a new problem",
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ProblemCreate"
-              }
-            }
-          }
-        },
-        "responses": {
-          "201": {
-            "description": "Problem created",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
+            },
+            "GetProblems": {
+                "type": "object",
+                "properties": {
                     "id": {
-                      "type": "integer",
-                      "description": "Id of the problem in the db",
-                      "example": 936
+                        "type": "integer"
                     },
-                    "message": {
-                      "type": "string",
-                      "example": "Problem Created"
+                    "text": {
+                        "type": "string"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "author": {
+                        "type": "string"
+                    },
+                    "solution": {
+                        "type": "string"
+                    },
+                    "course": {
+                        "type": "string"
+                    },
+                    "difficulty": {
+                        "type": "string"
+                    },
+                    "status": {
+                        "type": "string"
+                    },
+                    "topics": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
                     }
-                  }
                 }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
+            },
+            "GetProblem": {
+                "type": "object",
+                "properties": {
+                    "text": {
+                        "type": "string"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "author": {
+                        "type": "string"
+                    },
+                    "solution": {
+                        "type": "string"
+                    },
+                    "course": {
+                        "type": "string"
+                    },
+                    "difficulty": {
+                        "type": "string"
+                    },
+                    "status": {
+                        "type": "string"
+                    },
+                    "topics": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    }
                 }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
+            },
+            "PostProblem": {
+                "type": "object",
+                "properties": {
+                    "text": {
+                        "type": "string"
+                    },
+                    "author": {
+                        "type": "string"
+                    },
+                    "solution": {
+                        "type": "string"
+                    },
+                    "course": {
+                        "type": "string"
+                    },
+                    "difficulty": {
+                        "type": "string"
+                    },
+                    "status": {
+                        "type": "string"
+                    },
+                    "topics": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    }
                 }
-              }
+            },
+            "PatchProblem": {
+                "type": "object",
+                "properties": {
+                    "text": {
+                        "type": "string"
+                    },
+                    "solution": {
+                        "type": "string"
+                    },
+                    "course": {
+                        "type": "string"
+                    },
+                    "difficulty": {
+                        "type": "string"
+                    },
+                    "status": {
+                        "type": "string"
+                    },
+                    "topics": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "GetWorkspaces": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "name": {
+                        "type": "string"
+                    }
+                }
+            },
+            "GetWorkspace": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    }
+                }
+            },
+            "PostWorkspace": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    }
+                }
+            },
+            "EditWorkspace": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    }
+                }
+            },
+            "PostModule": {
+                "type": "object",
+                "properties": {
+                    "parent": {
+                        "type": "integer"
+                    },
+                    "name": {
+                        "type": "string"
+                    }
+                }
             }
-          }
         }
-      }
     },
-    "/api/problems/{id}": {
-      "get": {
-        "tags": [
-          "Problems"
-        ],
-        "summary": "Get problem by ID",
-        "description": "Retrieve one non-deleted problem by the id",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "description": "Problem id; must be associated with active problem in db",
-            "schema": {
-              "type": "integer"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Problem"
+    "paths": {
+        "/auth/login": {
+            "post": {
+                "tags": [
+                    "auth"
+                ],
+                "summary": "User Login",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Login"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/TokenRes"
+                                }
+                            }
+                        }
+                    }
                 }
-              }
             }
-          },
-          "400": {
-            "description": "Bad Request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          }
-        }
-      },
-      "patch": {
-        "tags": [
-          "Problems"
-        ],
-        "summary": "Update problem by ID",
-        "description": "Update a problem by id. All fields in the JSON body are optional.",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "description": "Id of a problem in the db",
-            "schema": {
-              "type": "integer"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ProblemUpdate"
-              }
-            }
-          }
         },
-        "responses": {
-          "200": {
-            "description": "Problem updated successfully",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string",
-                      "example": "Problem updated successfully"
+        "/auth/register/{token}": {
+            "post": {
+                "tags": [
+                    "auth"
+                ],
+                "summary": "User Registration",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "token",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
                     }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "Problems"
-        ],
-        "summary": "Delete problem by ID",
-        "description": "Delete a problem by id",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "description": "Id of a problem in the db",
-            "schema": {
-              "type": "integer"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successfully deleted",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string",
-                      "example": "Successfully Deleted User"
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Register"
+                            }
+                        }
                     }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/topics": {
-      "get": {
-        "tags": [
-          "Topics"
-        ],
-        "summary": "Get all topics",
-        "description": "Retrieve a list of all topics",
-        "responses": {
-          "200": {
-            "description": "Successful response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  },
-                  "example": [
-                    "arrays",
-                    "recursion"
-                  ]
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/tickets/{id}": {
-      "get": {
-        "tags": [
-          "Tickets"
-        ],
-        "summary": "Get ticket by ID",
-        "description": "Retrieve a ticket by ID",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "description": "Id of a ticket in the db",
-            "schema": {
-              "type": "integer"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Ticket"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "Tickets"
-        ],
-        "summary": "Close ticket by ID",
-        "description": "Closes a ticket by ID",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "description": "ID of an open ticket in the database",
-            "schema": {
-              "type": "integer"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successfully closed ticket",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string",
-                      "example": "Successfully closed ticket"
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/TokenRes"
+                                }
+                            }
+                        }
                     }
-                  }
                 }
-              }
             }
-          },
-          "400": {
-            "description": "Bad Request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
+        },
+        "/auth/invitations": {
+            "post": {
+                "tags": [
+                    "auth"
+                ],
+                "summary": "Send Invitation",
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Invite"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Created"
+                    }
                 }
-              }
             }
-          },
-          "500": {
-            "description": "Internal Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
+        },
+        "/users": {
+            "get": {
+                "tags": [
+                    "users"
+                ],
+                "summary": "Get All Users",
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "page",
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "in": "query",
+                        "name": "page_size",
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "in": "query",
+                        "name": "sort",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PaginatedAPIResponse"
+                                }
+                            }
+                        }
+                    }
                 }
-              }
+            },
+            "post": {
+                "tags": [
+                    "users"
+                ],
+                "summary": "Create User",
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "responses": {
+                    "501": {
+                        "description": "Not Implemented"
+                    }
+                }
             }
-          }
+        },
+        "/users/{email}": {
+            "delete": {
+                "tags": [
+                    "users"
+                ],
+                "summary": "Delete User",
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "email",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/tickets/{id}": {
+            "get": {
+                "tags": [
+                    "tickets"
+                ],
+                "summary": "Get Ticket",
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Ticket"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "tickets"
+                ],
+                "summary": "Delete Ticket",
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            },
+            "patch": {
+                "tags": [
+                    "tickets"
+                ],
+                "summary": "Update Ticket",
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdateTicket"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/tickets/close/{id}": {
+            "patch": {
+                "tags": [
+                    "tickets"
+                ],
+                "summary": "Close Ticket",
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/system/health": {
+            "get": {
+                "tags": [
+                    "system"
+                ],
+                "summary": "Health Check",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HealthReport"
+                                }
+                            }
+                        }
+                    },
+                    "503": {
+                        "description": "Service Unavailable",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HealthReport"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/problems": {
+            "get": {
+                "tags": [
+                    "problems"
+                ],
+                "summary": "Get Problems",
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "page",
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "in": "query",
+                        "name": "page_size",
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "in": "query",
+                        "name": "sort",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/GetProblems"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "problems"
+                ],
+                "summary": "Create Problem",
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/PostProblem"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Created"
+                    }
+                }
+            }
+        },
+        "/problems/{id}": {
+            "get": {
+                "tags": [
+                    "problems"
+                ],
+                "summary": "Get Problem",
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/GetProblem"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "problems"
+                ],
+                "summary": "Delete Problem",
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            },
+            "patch": {
+                "tags": [
+                    "problems"
+                ],
+                "summary": "Patch Problem",
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/PatchProblem"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/problems/topics": {
+            "get": {
+                "tags": [
+                    "problems"
+                ],
+                "summary": "Get Topics",
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/workspaces": {
+            "get": {
+                "tags": [
+                    "workspaces"
+                ],
+                "summary": "Get Workspaces",
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/GetWorkspaces"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "workspaces"
+                ],
+                "summary": "Create Workspace",
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/PostWorkspace"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Created"
+                    }
+                }
+            }
+        },
+        "/workspaces/{id}": {
+            "get": {
+                "tags": [
+                    "workspaces"
+                ],
+                "summary": "Get Workspace",
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/GetWorkspace"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "workspaces"
+                ],
+                "summary": "Delete Workspace",
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            },
+            "patch": {
+                "tags": [
+                    "workspaces"
+                ],
+                "summary": "Edit Workspace",
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/EditWorkspace"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/modules": {
+            "post": {
+                "tags": [
+                    "workspaces"
+                ],
+                "summary": "Create Module",
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/PostModule"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Created"
+                    }
+                }
+            }
         }
-      }
     }
-  },
-  "components": {
-    "schemas": {
-      "Course": {
-        "type": "string",
-        "enum": [
-          "TCSS142",
-          "TCSS143",
-          "TCSS305",
-          "TCSS321",
-          "TCSS342",
-          "TCSS343",
-          "not_set"
-        ],
-        "example": "TCSS321"
-      },
-      "Difficulty": {
-        "type": "string",
-        "enum": [
-          "easy",
-          "medium",
-          "hard",
-          "not_set"
-        ],
-        "example": "easy"
-      },
-      "Status": {
-        "type": "string",
-        "enum": [
-          "review",
-          "ok",
-          "deleted",
-          "rejected"
-        ],
-        "example": "review"
-      },
-      "Problem": {
-        "type": "object",
-        "properties": {
-          "text": {
-            "type": "string",
-            "description": "Text of the problem",
-            "example": "What is 5 + 5?"
-          },
-          "created_at": {
-            "type": "string",
-            "format": "date-time",
-            "description": "Time when problem was created",
-            "example": "2025-09-03T05:52:09.434361+00:00"
-          },
-          "updated_at": {
-            "type": "string",
-            "format": "date-time",
-            "description": "Time when problem was last updated",
-            "example": "2025-09-03T05:52:09.434361+00:00"
-          },
-          "author": {
-            "type": "string",
-            "description": "Creator's email",
-            "example": "matchew@uw.edu"
-          },
-          "solution": {
-            "type": "string",
-            "description": "Solution to the problem; has a high chance of being empty",
-            "example": "10"
-          },
-          "course": {
-            "$ref": "#/components/schemas/Course"
-          },
-          "difficulty": {
-            "$ref": "#/components/schemas/Difficulty"
-          },
-          "status": {
-            "$ref": "#/components/schemas/Status"
-          },
-          "topics": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "description": "All associated topics",
-            "example": [
-              "Recursion",
-              "Arrays"
-            ]
-          }
-        }
-      },
-      "ProblemWithId": {
-        "allOf": [
-          {
-            "type": "object",
-            "properties": {
-              "id": {
-                "type": "integer",
-                "description": "Problem id",
-                "example": 928
-              }
-            }
-          },
-          {
-            "$ref": "#/components/schemas/Problem"
-          }
-        ]
-      },
-      "ProblemCreate": {
-        "type": "object",
-        "required": [
-          "text",
-          "author"
-        ],
-        "properties": {
-          "text": {
-            "type": "string",
-            "description": "Text of the problem in latex",
-            "example": "This is a test problem."
-          },
-          "author": {
-            "type": "string",
-            "description": "Email of the author; must be a valid email and end with @uw.edu",
-            "pattern": "^.*@uw\\.edu$",
-            "example": "matchew@uw.edu"
-          },
-          "solution": {
-            "type": "string",
-            "description": "Solution of the problem in latex",
-            "example": "solution to test"
-          },
-          "course": {
-            "$ref": "#/components/schemas/Course"
-          },
-          "difficulty": {
-            "$ref": "#/components/schemas/Difficulty"
-          },
-          "status": {
-            "$ref": "#/components/schemas/Status"
-          },
-          "topics": {
-            "type": "array",
-            "items": {
-              "type": "string",
-              "minLength": 2
-            },
-            "description": "Topics related to the problem; each topic must have at least len 2 and all lowercase",
-            "example": [
-              "arrays",
-              "recursion"
-            ]
-          }
-        }
-      },
-      "ProblemUpdate": {
-        "type": "object",
-        "properties": {
-          "text": {
-            "type": "string",
-            "description": "Text of the problem in latex",
-            "example": "This is a test problem."
-          },
-          "solution": {
-            "type": "string",
-            "description": "Solution of the problem in latex",
-            "example": "solution to test"
-          },
-          "course": {
-            "$ref": "#/components/schemas/Course"
-          },
-          "difficulty": {
-            "$ref": "#/components/schemas/Difficulty"
-          },
-          "status": {
-            "$ref": "#/components/schemas/Status"
-          },
-          "topics": {
-            "type": "array",
-            "items": {
-              "type": "string",
-              "minLength": 2
-            },
-            "description": "Topics associated with the problem. If left nil, nothing changes. If [], then removes all associated topics. If [x, y, ..] then removes all topics except for the ones in arr (adds ones that are not there); each topic must be at least a len of 2, and must be lowercase",
-            "example": [
-              "arrays",
-              "recursion"
-            ],
-            "nullable": true
-          }
-        }
-      },
-      "Ticket": {
-        "type": "object",
-        "properties": {
-          "user": {
-            "type": "string",
-            "description": "Email of a user in the db",
-            "example": "2"
-          },
-          "subject": {
-            "type": "string",
-            "description": "Subject of a ticket in the db",
-            "example": "please help"
-          },
-          "is_open": {
-            "type": "boolean",
-            "description": "State of a ticket in the db",
-            "example": true
-          },
-          "created_at": {
-            "type": "string",
-            "format": "date-time",
-            "description": "Time of the tickets creation in the db",
-            "example": "2025-07-17T04:44:02.600214+00:00"
-          },
-          "message": {
-            "type": "string",
-            "description": "Message of the ticket in the db",
-            "example": "somebody is hacking in my game"
-          }
-        }
-      },
-      "Error": {
-        "type": "object",
-        "properties": {
-          "error": {
-            "type": "string",
-            "example": "Error message description"
-          }
-        }
-      },
-      "ErrorResponse": {
-        "type": "object",
-        "properties": {
-          "status": {
-            "type": "integer",
-            "example": 400,
-            "description": "HTTP status code."
-          },
-          "message": {
-            "type": "string",
-            "example": "Invalid request body",
-            "description": "Error message."
-          },
-          "timestamp": {
-            "type": "string",
-            "format": "date-time",
-            "example": "2025-10-20T12:34:56+00:00",
-            "description": "Timestamp of the error."
-          }
-        }
-      }
-    }
-  }
 }
