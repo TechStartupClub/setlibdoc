@@ -45,6 +45,11 @@
 					}
 				]
 			},
+			{
+				title: 'Swagger UI',
+				url: resolve('/swagger'),
+				items: []
+			},
 			makeNavSection('Auth', '/auth', auth),
 			makeNavSection('Users', '/users', users),
 			makeNavSection('Problems', '/problems', problems),
