@@ -5,6 +5,28 @@
         "version": "1.0",
         "description": "API Server for TypeSheet application."
     },
+    {
+      "url": "https://setlib.onrender.com",
+      "description": "Remote production server"
+    }
+  ],
+  "paths": {
+    "/api/topics": {
+      "get": {
+        "tags": [ "Topics" ],
+        "summary": "Get all topics",
+        "description": "Retrieve a list of all topics",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "example": [ "arrays", "recursion" ]
     "servers": [
         {
             "url": "http://localhost:4000/api",
@@ -662,6 +684,18 @@
                     }
                 }
             }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "example": {
+                  "status": "500",
+                  "message": "invalid server error",
+                  "timestamp": "2025-10-20T12:34:56+00:00",
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
         },
         "/system/health": {
             "get": {
@@ -692,6 +726,41 @@
                     }
                 }
             }
+          }
+        }
+      }
+    },
+  },
+  "components": {
+    "schemas": {
+      "Error": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string",
+            "example": "Error message description"
+          }
+        }
+      },
+      "ErrorResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "integer",
+            "example": 400,
+            "description": "HTTP status code."
+          },
+          "message": {
+            "type": "string",
+            "example": "Invalid request body",
+            "description": "Error message."
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2025-10-20T12:34:56+00:00",
+            "description": "Timestamp of the error."
+          }
         },
         "/problems": {
             "get": {
